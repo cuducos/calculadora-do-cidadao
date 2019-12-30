@@ -14,13 +14,13 @@ class CalculadoraDoCidadão:
     )
 
     ÍNDICES = {
-        "00189IGP-M": "gIGP-M (FGV) - a partir de 06/1989",
-        "00190IGP-DI": "gIGP-DI (FGV) - a partir de 02/1944",
-        "00188INPC": "gINPC (IBGE) - a partir de 04/1979",
-        "00433IPCA": "gIPCA (IBGE) - a partir de 01/1980",
-        "10764IPC-E": "gIPCA-E (IBGE) - a partir de 01/1992",
-        "00191IPC-BRASIL": "gIPC-BRASIL (FGV) - a partir de 01/1990",
-        "00193IPC-SP": "gIPC-SP (FIPE) - a partir de 11/1942",
+        "00189IGP-M": "IGP-M (FGV) - a partir de 06/1989",
+        "00190IGP-DI": "IGP-DI (FGV) - a partir de 02/1944",
+        "00188INPC": "INPC (IBGE) - a partir de 04/1979",
+        "00433IPCA": "IPCA (IBGE) - a partir de 01/1980",
+        "10764IPC-E": "IPCA-E (IBGE) - a partir de 01/1992",
+        "00191IPC-BRASIL": "IPC-BRASIL (FGV) - a partir de 01/1990",
+        "00193IPC-SP": "IPC-SP (FIPE) - a partir de 11/1942",
     }
     ÍNDICE_PADRÃO = "00189IGP-M"
 

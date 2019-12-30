@@ -36,8 +36,7 @@ class CalculadoraDoCidadão:
     @staticmethod
     def preparar_data(data=None):
         data = data or date.today()
-        mês = str(data.month).zfill(2)
-        return f"{mês}/{data.year}"
+        return f"{data.month:0>2d}/{data.year}"
 
     @staticmethod
     def limpar_chave(texto):

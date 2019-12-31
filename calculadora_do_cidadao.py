@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from requests import post
 
 
-class CalculadoraDoCidadão:
+class BaseDaCalculadoraDoCidadão:
 
     URL_DO_FORMULÁRIO = (
         "https://www3.bcb.gov.br/"
@@ -70,7 +70,7 @@ class CalculadoraDoCidadão:
         }
         return {chave: valor for chave, valor in dados.items() if valor}
 
-    def __call__(self, valor, data_original, data_final=None):
+    def dados_para_requisição(self, valor, data_original, data_final):
         if not data_final or isinstance(data_final, date):
             data_final = self.preparar_data(data_final)
 
@@ -88,6 +88,25 @@ class CalculadoraDoCidadão:
                 "valorCorrecao": valor,
             }
         )
+        return dados
 
-        resposta = post(self.URL_DO_FORMULÁRIO, data=dados, verify=self.verificar_ssl)
+
+class CalculadoraDoCidadão(BaseDaCalculadoraDoCidadão):
+    def __call__(self, valor, data_original, data_final=None):
+        resposta = post(
+            self.URL_DO_FORMULÁRIO,
+            data=self.dados_para_requisição(valor, data_original, data_final),
+            verify=self.verificar_ssl,
+        )
         return self.parser(resposta.text)
+
+
+class CalculadoraDoCidadãoAsyncio(BaseDaCalculadoraDoCidadão):
+    async def __call__(self, sessão, valor, data_original, data_final=None):
+        kwargs = {
+            "data": self.dados_para_requisição(valor, data_original, data_final),
+            "ssl": self.verificar_ssl,
+        }
+
+        async with sessão.post(self.URL_DO_FORMULÁRIO, **kwargs) as resposta:
+            return self.parser(await resposta.text())

@@ -2,7 +2,6 @@ from datetime import date
 from re import sub
 
 from bs4 import BeautifulSoup
-
 from requests import post
 
 
@@ -41,7 +40,7 @@ class BaseDaCalculadoraDoCidadão:
     @staticmethod
     def limpar_chave(texto):
         texto = sub(r"\s+", " ", texto)
-        return texto
+        return texto.strip()
 
     @staticmethod
     def limpar_valor(texto):
@@ -78,7 +77,7 @@ class BaseDaCalculadoraDoCidadão:
             data_original = self.preparar_data(data_original)
 
         valor = valor if isinstance(valor, float) else float(valor)
-        valor = str(valor).replace(".", ",")
+        valor = f"{valor:.2f}".replace(".", ",")
 
         dados = self.dados_do_formulário.copy()
         dados.update(

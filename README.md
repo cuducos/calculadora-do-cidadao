@@ -8,15 +8,7 @@ Pacote em Python para uso da [Calculadora do Cidadão](https://www3.bcb.gov.br/C
 $ pip install git+https://github.com/cuducos/calculadora-do-cidadao.git
 ```
 
-Ou, se você quiser usar a versão assíncrona:
-
-
-```console
-$ pip install git+https://github.com/cuducos/calculadora-do-cidadao.git[aio]
-```
-
 ## Uso
-
 
 ```python
 In [1]: from calculadora_do_cidadao import CalculadoraDoCidadão
@@ -59,4 +51,10 @@ In [6]: async def main():
   'Valor nominal': 42.0,
   'Índice de correção no período': 1.8773205,
   'Valor corrigido na data final': 78.85}
+```
+
+## Testes
+
+```
+$ python setup.py test
 ```

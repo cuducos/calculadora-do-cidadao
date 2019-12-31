@@ -1,3 +1,7 @@
+```console
+$ pip install git+https://github.com/cuducos/calculadora-do-cidadao.git
+```
+
 ```python
 In [1]: from calculadora_do_cidadao import CalculadoraDoCidadão
 

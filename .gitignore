@@ -2,4 +2,6 @@
 *.pyc
 .coverage
 .eggs/
+.mypy_cache/
 __pycache__/
+htmlcov/

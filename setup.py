@@ -30,6 +30,8 @@ setup(
         "pytest-asyncio",
         "pytest-black",
         "pytest-cov",
+        "pytest-mock",
+        "pytest-mypy",
     ],
     url="https://github.com/cuducos/calculadora-do-cidadao",
     version="0.0.1",

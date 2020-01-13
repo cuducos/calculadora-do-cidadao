@@ -16,7 +16,7 @@ Os adaptadores disponíveis são:
 
 Todos os adaptadores (ver listagem a seguir) fazem o download dos dados na hora que a classe é instanciada. Esses dados ficam no atributo `data` da instância da classe do adaptador.
 
-Ou seja, criar uma instância de demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
+Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
 
 Todos os adaptadores tem o método `adjust` que recebe três argumentos:
 

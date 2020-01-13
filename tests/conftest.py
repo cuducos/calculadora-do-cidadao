@@ -19,3 +19,8 @@ def zip_file():
             archive.write(fixture, arcname=fixture.name)
 
         yield path
+
+
+@fixture
+def ipca_fixture():
+    return Path(__file__).parent / "ipca_fixture.xls"

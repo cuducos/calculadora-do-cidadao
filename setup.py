@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 setup(
     author="Eduardo Cuducos",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -14,9 +14,9 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Utilities",
     ],
-    description="Python wrapper for Central Bank of Brazil's Calculadora do Cidadão",
-    install_requires=["aiohttp>=3.6.2", "beautifulsoup4>=4.8.0", "requests>=2.22.0"],
-    keywords="Brazil, Calculadora do Cidadão",
+    description="Tool for Brazilian Reais monetary adjustment/correction",
+    install_requires=["rows[xls]>=0.4.1"],
+    keywords="Brazil, Brazilian reais, monetary adjusment, monetary correction, IPCA",
     license="GPLv3",
     long_description=Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
@@ -25,9 +25,7 @@ setup(
     py_modules=["calculadora_do_cidadao"],
     setup_requires=["pytest-runner"],
     tests_require=[
-        "asynctest",
         "pytest",
-        "pytest-asyncio",
         "pytest-black",
         "pytest-cov",
         "pytest-mock",

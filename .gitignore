@@ -4,4 +4,5 @@
 .eggs/
 .mypy_cache/
 __pycache__/
+dist/
 htmlcov/

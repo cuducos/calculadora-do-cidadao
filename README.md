@@ -34,16 +34,16 @@ In [1]: from datetime import date
    ...: from decimal import Decimal
    ...: from calculadora_do_cidadao import Ipca
 
-In [4]: ipca = Ipca()
+In [2]: ipca = Ipca()
 
-In [5]: ipca.adjust(date(2018, 7, 6))
-Out[5]: Decimal('1.051202206630561280035407253')
+In [3]: ipca.adjust(date(2018, 7, 6))
+Out[3]: Decimal('1.051202206630561280035407253')
 
-In [6]: ipca.adjust(date(2014, 7, 8), 7)
-Out[6]: Decimal('9.407523138792336916983267321')
+In [4]: ipca.adjust(date(2014, 7, 8), 7)
+Out[4]: Decimal('9.407523138792336916983267321')
 
-In [7]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
-Out [7]: Decimal('5.279855889296777979447848574')
+In [5]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
+Out[5]: Decimal('5.279855889296777979447848574')
 ```
 
 ## Testes

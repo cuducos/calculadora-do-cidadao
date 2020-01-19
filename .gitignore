@@ -3,6 +3,7 @@
 .coverage
 .eggs/
 .mypy_cache/
+.venv/
 __pycache__/
 dist/
 htmlcov/

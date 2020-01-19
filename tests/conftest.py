@@ -21,6 +21,15 @@ def zip_file():
         yield path
 
 
+def get_fixture(name):
+    return Path(__file__).parent / "fixtures" / name
+
+
 @fixture
 def ipca_fixture():
-    return Path(__file__).parent / "ipca_fixture.xls"
+    return get_fixture("ipca.xls")
+
+
+@fixture
+def selic_fixture():
+    return get_fixture("selic.html")

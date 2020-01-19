@@ -3,9 +3,12 @@ from dataclasses import dataclass
 from ftplib import FTP
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Iterator
-from zipfile import ZipFile
+from typing import Iterator, Optional
 from urllib.parse import ParseResult, urlparse
+from zipfile import ZipFile
+
+from requests import Session
+from requests.utils import cookiejar_from_dict
 
 
 class DownloadMethodNotImplementedError(Exception):
@@ -15,10 +18,13 @@ class DownloadMethodNotImplementedError(Exception):
 @dataclass
 class Download:
     url: str
+    should_unzip: bool = False
+    cookies: Optional[dict] = None
 
     def __post_init__(self) -> None:
         self.parsed_url: ParseResult = urlparse(self.url)
         self.file_name: str = Path(self.parsed_url.path).name
+        self.https = self.http  # maps HTTPS requests to HTTP method
 
         try:
             self.download_to = getattr(self, self.parsed_url.scheme)
@@ -35,6 +41,14 @@ class Download:
             target.write_bytes(archive.read(first_file))
         return target
 
+    def http(self, path: Path) -> Path:
+        session = Session()
+        if self.cookies:
+            session.cookies = cookiejar_from_dict(self.cookies)
+        response = session.get(self.url)
+        path.write_bytes(response.content)
+        return path
+
     def ftp(self, path: Path) -> Path:
         with FTP(self.parsed_url.netloc) as conn:
             conn.login()
@@ -46,4 +60,4 @@ class Download:
     def __call__(self) -> Iterator[Path]:
         with TemporaryDirectory() as tmp:
             path = self.download_to(Path(tmp) / self.file_name)
-            yield self.unzip(path)
+            yield self.unzip(path) if self.should_unzip else path

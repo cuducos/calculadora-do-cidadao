@@ -1,11 +1,17 @@
 from abc import ABCMeta, abstractmethod
 from datetime import date
 from decimal import Decimal
-from typing import Iterator, NamedTuple, Optional, Tuple, Union
+from typing import Iterable, NamedTuple, Optional, Union
 
+from rows import import_from_html
 from rows.plugins.xls import import_from_xls
 
 from calculadora_do_cidadao.download import Download
+from calculadora_do_cidadao.typing import IndexesGenerator, MaybeIndexesGenerator
+
+
+class AdapterNoImportMethod(Exception):
+    pass
 
 
 class AdapterDateNotAvailableError(Exception):
@@ -14,20 +20,51 @@ class AdapterDateNotAvailableError(Exception):
 
 class Adapter(metaclass=ABCMeta):
     def __init__(self) -> None:
+        functions = {"html": import_from_html, "xls": import_from_xls}
+        try:
+            self.read_from = functions[self.file_type]
+        except KeyError:
+            msg = (
+                f"Invalid file type {self.file_type}. "
+                f"Valid file types are: {', '.join(functions)}."
+            )
+            raise AdapterNoImportMethod(msg)
+
         self.data = {key: value for key, value in self.download()}
-        self.most_recent_date = max(self.data.keys())
+        if self.data:
+            self.most_recent_date = max(self.data.keys())
+        if self.should_aggregate:
+            self.aggregate()
 
     @property
-    def import_kwargs(self) -> dict:
-        return getattr(self, "IMPORT_KWARGS", {})
+    def import_kwargs(self) -> Iterable[dict]:
+        value = getattr(self, "IMPORT_KWARGS", {})
+        return (value,) if isinstance(value, dict) else value
+
+    @property
+    def cookies(self) -> dict:
+        return getattr(self, "COOKIES", {})
+
+    @property
+    def should_unzip(self) -> bool:
+        return getattr(self, "SHOULD_UNZIP", False)
+
+    @property
+    def should_aggregate(self) -> bool:
+        return getattr(self, "SHOULD_AGGREGATE", False)
 
     @property
     @abstractmethod
     def url(self) -> str:
         pass  # pragma: no cover
 
+    @property
     @abstractmethod
-    def serialize(self, row: NamedTuple) -> Union[Tuple[date, Decimal], None]:
+    def file_type(self) -> str:
+        pass  # pragma: no cover
+
+    @abstractmethod
+    def serialize(self, row: NamedTuple) -> MaybeIndexesGenerator:
         pass  # pragma: no cover
 
     def invalid_date_error_message(self, wanted: date) -> str:
@@ -45,10 +82,16 @@ class Adapter(metaclass=ABCMeta):
             raise AdapterDateNotAvailableError(msg)
         return output
 
+    def aggregate(self):
+        accumulated = 1
+        for key in sorted(self.data.keys()):
+            self.data[key] = accumulated * (1 + self.data[key])
+            accumulated = self.data[key]
+
     def adjust(
         self,
         original_date: date,
-        value: Optional[Union[Decimal, float, int]] = 0,
+        value: Union[Decimal, float, int, None] = 0,
         target_date: Optional[date] = None,
     ) -> Decimal:
         original = self.round_date(original_date, validate=True)
@@ -60,9 +103,9 @@ class Adapter(metaclass=ABCMeta):
         percent = self.data[target] / self.data[original]
         return value * percent
 
-    def download(self) -> Iterator[Tuple[date, Decimal]]:
-        download = Download(self.url)
+    def download(self) -> IndexesGenerator:
+        download = Download(self.url, self.should_unzip, self.cookies)
         with download() as path:
-            table = import_from_xls(path, **self.import_kwargs)
-            rows = (self.serialize(row) for row in table)
-            yield from (row for row in rows if row)
+            for kwargs in self.import_kwargs:
+                for data in self.read_from(path, **kwargs):
+                    yield from (row for row in self.serialize(data) if row)

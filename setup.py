@@ -32,6 +32,6 @@ setup(
         "pytest-mypy",
     ],
     url="https://github.com/cuducos/calculadora-do-cidadao",
-    version="0.0.1",
+    version="0.0.2",
     zip_safe=False,
 )

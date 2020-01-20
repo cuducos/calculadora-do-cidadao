@@ -73,6 +73,8 @@ Todo adaptador precisa de um método `serialize`. Esse método sempre recebe uma
 
 ### Testes
 
+A suíte de testes roda com [`tox`](https://pypi.org/project/tox/). Se você não tiver instalado, `pip install tox` deve resolver.
+
 ```
-$ python setup.py test
+$ tox
 ```

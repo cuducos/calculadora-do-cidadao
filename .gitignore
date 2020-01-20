@@ -3,6 +3,7 @@
 .coverage
 .eggs/
 .mypy_cache/
+.tox/
 .venv/
 __pycache__/
 dist/

@@ -1,5 +1,11 @@
 # Calculadora do Cidadão
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cuducos/calculadora-do-cidadao/Tests)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/cuducos/calculadora-do-cidadao)
+![Code Climate coverage](https://img.shields.io/codeclimate/coverage/cuducos/calculadora-do-cidadao)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/calculadora-do-cidadao)
+![PyPI](https://img.shields.io/pypi/v/calculadora-do-cidadao)
+
 Pacote em Python para correção de valores.
 
 ## Instalação

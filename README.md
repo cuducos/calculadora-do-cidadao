@@ -37,7 +37,7 @@ Todos os adaptadores tem o método `adjust` que recebe três argumentos:
 ```
 In [1]: from datetime import date
    ...: from decimal import Decimal
-   ...: from calculadora_do_cidadao.adapter import Ipca
+   ...: from calculadora_do_cidadao.adapters import Ipca
 
 In [2]: ipca = Ipca()
 

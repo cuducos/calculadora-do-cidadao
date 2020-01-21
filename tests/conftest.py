@@ -33,3 +33,8 @@ def ipca_fixture():
 @fixture
 def selic_fixture():
     return get_fixture("selic.html")
+
+
+@fixture
+def ipca15_fixture():
+    return get_fixture("ipca15.xls")

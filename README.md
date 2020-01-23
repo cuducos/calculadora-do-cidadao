@@ -18,8 +18,9 @@ $ pip install calculadora-do-cidadao
 
 Os adaptadores disponíveis são:
 
-* [`calcladora_do_cidadao.adapters.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
-* [`calcladora_do_cidadao.adapters.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
+* __IPCA__: [`calcladora_do_cidadao.adapters.Ipca.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
+* __IPCA-15__: [`calcladora_do_cidadao.adapters.Ipca.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
+* __Selic__: [`calcladora_do_cidadao.adapters.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
 
 Todos os adaptadores fazem o download dos dados na hora que a classe é instanciada. Esses dados ficam no atributo `data` da instância da classe do adaptador. Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
 

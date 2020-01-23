@@ -7,8 +7,7 @@ from calculadora_do_cidadao.months import MONTHS
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 
-class Ipca(Adapter):
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA/Serie_Historica/ipca_SerieHist.zip"
+class BaseIpcaAdapter(Adapter):
     file_type = "xls"
 
     IMPORT_KWARGS = {"end_column": 2}
@@ -27,3 +26,11 @@ class Ipca(Adapter):
         self.last_year = year
 
         yield reference_date, value
+
+
+class Ipca(BaseIpcaAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA/Serie_Historica/ipca_SerieHist.zip"
+
+
+class Ipca15(BaseIpcaAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_15/Series_Historicas/ipca-15_SerieHist.zip"

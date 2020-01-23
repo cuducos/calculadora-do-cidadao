@@ -20,7 +20,7 @@ def test_data(original, value, target, expected, ipca15_fixture, mocker):
     download.return_value.return_value.__enter__.return_value = ipca15_fixture
     ipca15 = Ipca15()
     assert len(ipca15.data) == 312
-    assert ipca15.adjust(original, value, target) == Decimal(expected)
+    assert ipca15.adjust(original, value, target) == pytest.approx(Decimal(expected))
 
     msg = r"This adapter has data from 01/1994 to 12/2019\. 02/2020 is out of range\."
     with pytest.raises(AdapterDateNotAvailableError, match=msg):

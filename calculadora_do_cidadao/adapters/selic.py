@@ -12,6 +12,8 @@ FIELD_TYPES = {f"field_{year}": PercentField for year in YEARS}
 
 
 class Selic(Adapter):
+    """Adapter for Brazilian Central Bank SELIC series."""
+
     url = "http://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic"
     file_type = "html"
 
@@ -21,6 +23,8 @@ class Selic(Adapter):
     )
 
     def serialize(self, row: NamedTuple) -> MaybeIndexesGenerator:
+        """As each row contains more than one index this method might yield
+        more than one `calculadora_do_cidadao.typing.Index`."""
         for year in YEARS:
             value = getattr(row, f"field_{year}")
             month = MONTHS[getattr(row, "mesano")]

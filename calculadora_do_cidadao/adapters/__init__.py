@@ -11,15 +11,28 @@ from calculadora_do_cidadao.typing import IndexesGenerator, MaybeIndexesGenerato
 
 
 class AdapterNoImportMethod(Exception):
+    """To be used when the adapter has no `rows` import method set."""
+
     pass
 
 
 class AdapterDateNotAvailableError(Exception):
+    """To be used when using a date outside of the range available."""
+
     pass
 
 
 class Adapter(metaclass=ABCMeta):
+    """This is the base adapter, all adapters should inherit from it. Its
+    children require at least a `url` and `file_type` class variables."""
+
     def __init__(self) -> None:
+        """The initialization of the Adapter consists of three steps. First it
+        tries to infer the `rows` import method to use from the `file_type`
+        class variable (which can be `html` or `xls`). Then it uses the
+        `Download` class to store index data. Finally, if the source data is
+        disaggregated, it calls the ` aggregate` method.
+        """
         functions = {"html": import_from_html, "xls": import_from_xls}
         try:
             self.read_from = functions[self.file_type]
@@ -38,36 +51,50 @@ class Adapter(metaclass=ABCMeta):
 
     @property
     def import_kwargs(self) -> Iterable[dict]:
+        """Wrapper to get IMPORT_KWARGS if set, avoiding error if not set."""
         value = getattr(self, "IMPORT_KWARGS", {})
         return (value,) if isinstance(value, dict) else value
 
     @property
     def cookies(self) -> dict:
+        """Wrapper to get COOKIES if set, avoiding error if not set."""
         return getattr(self, "COOKIES", {})
 
     @property
     def should_unzip(self) -> bool:
+        """Wrapper to get SHOULD_UNZIP if set, avoiding error if not set."""
         return getattr(self, "SHOULD_UNZIP", False)
 
     @property
     def should_aggregate(self) -> bool:
+        """Wrapper to get SHOULD_AGGREGATE if set, avoiding error if not set."""
         return getattr(self, "SHOULD_AGGREGATE", False)
 
     @property
     @abstractmethod
     def url(self) -> str:
+        """The URL where to get data from."""
         pass  # pragma: no cover
 
     @property
     @abstractmethod
     def file_type(self) -> str:
+        """File type of the response from the `url`, usually html or xls."""
         pass  # pragma: no cover
 
     @abstractmethod
     def serialize(self, row: NamedTuple) -> MaybeIndexesGenerator:
+        """This method should be a generator that receives a row from `rows`
+        (which is a `NamedTuple`) and yields `None` if the row does not hold
+        any valid index data, or yields `calculadora_do_cidadao.typing.Index`
+        type if the row has valid data. A row can yield more than one
+        `calculadora_do_cidadao.typing.Index`.
+        """
         pass  # pragma: no cover
 
     def invalid_date_error_message(self, wanted: date) -> str:
+        """Helper to generate an error message usually used together with
+        `AdapterDateNotAvailableErrora`."""
         first, last = min(self.data.keys()), max(self.data.keys())
         return (
             f"This adapter has data from {first.month:0>2d}/{first.year} "
@@ -76,6 +103,9 @@ class Adapter(metaclass=ABCMeta):
         )
 
     def round_date(self, obj: date, validate: bool = False) -> date:
+        """Method to round `date` objects to hold `day = 1`, as indexes usually
+        refers to monthly periods, not daily periods. It also validates if the
+        intended date is in the adapter data range."""
         output = date(obj.year, obj.month, 1)
         if validate and output not in self.data.keys():
             msg = self.invalid_date_error_message(output)
@@ -83,6 +113,12 @@ class Adapter(metaclass=ABCMeta):
         return output
 
     def aggregate(self):
+        """Being disaggregated here means the index for each month is a
+        percentage relative to the previous month. However the adjust method
+        gets way simpler if the indexes as stored as the percentage of the
+        month before the first month of the series. For example, if a given
+        index starts at January 1994, and all values should be a percentage
+        referring to December 1993."""
         accumulated = 1
         for key in sorted(self.data.keys()):
             self.data[key] = accumulated * (1 + self.data[key])
@@ -94,6 +130,15 @@ class Adapter(metaclass=ABCMeta):
         value: Union[Decimal, float, int, None] = 0,
         target_date: Optional[date] = None,
     ) -> Decimal:
+        """Main method of an adapter API, the one that actually makes the
+        monetary correction using adapter's data. It requires a `datetime.date`
+        used as the reference for the operation.
+
+        If no `value` if given, it returns considering the value is
+        `decimal.Decimal('1').
+
+        If no `target_date` is given, it returns considering the target date is
+        `datetime.date.today()`."""
         original = self.round_date(original_date, validate=True)
         target = self.most_recent_date
         if target_date:
@@ -104,6 +149,8 @@ class Adapter(metaclass=ABCMeta):
         return value * percent
 
     def download(self) -> IndexesGenerator:
+        """Wrapper to use the `Download` class and pipe the result to `rows`
+        imported method, yielding a series of rows parsed by `rows`."""
         download = Download(self.url, self.should_unzip, self.cookies)
         with download() as path:
             for kwargs in self.import_kwargs:

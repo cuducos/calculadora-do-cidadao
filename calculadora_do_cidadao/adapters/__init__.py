@@ -31,7 +31,7 @@ class Adapter(metaclass=ABCMeta):
         tries to infer the `rows` import method to use from the `file_type`
         class variable (which can be `html` or `xls`). Then it uses the
         `Download` class to store index data. Finally, if the source data is
-        disaggregated, it calls the ` aggregate` method.
+        disaggregated, it calls the `aggregate` method.
         """
         functions = {"html": import_from_html, "xls": import_from_xls}
         try:
@@ -94,7 +94,7 @@ class Adapter(metaclass=ABCMeta):
 
     def invalid_date_error_message(self, wanted: date) -> str:
         """Helper to generate an error message usually used together with
-        `AdapterDateNotAvailableErrora`."""
+        `AdapterDateNotAvailableError`."""
         first, last = min(self.data.keys()), max(self.data.keys())
         return (
             f"This adapter has data from {first.month:0>2d}/{first.year} "
@@ -114,7 +114,7 @@ class Adapter(metaclass=ABCMeta):
 
     def aggregate(self):
         """Being disaggregated here means the index for each month is a
-        percentage relative to the previous month. However the adjust method
+        percentage relative to the previous month. However the `adjust` method
         gets way simpler if the indexes as stored as the percentage of the
         month before the first month of the series. For example, if a given
         index starts at January 1994, and all values should be a percentage
@@ -135,7 +135,7 @@ class Adapter(metaclass=ABCMeta):
         used as the reference for the operation.
 
         If no `value` if given, it returns considering the value is
-        `decimal.Decimal('1').
+        `decimal.Decimal('1')`.
 
         If no `target_date` is given, it returns considering the target date is
         `datetime.date.today()`."""

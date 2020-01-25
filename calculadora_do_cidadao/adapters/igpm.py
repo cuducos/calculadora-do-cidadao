@@ -29,6 +29,7 @@ class Igpm(Adapter):
     SHOULD_AGGREGATE = True
 
     def serialize(self, row: NamedTuple) -> MaybeIndexesGenerator:
+        """Serialize method to discard the rows that are not valid data."""
         reference, value = row
         try:
             value = PercentField.deserialize(f"{value}%")

@@ -23,6 +23,6 @@ setup(
     packages=find_packages(),
     py_modules=["calculadora_do_cidadao"],
     url="https://github.com/cuducos/calculadora-do-cidadao",
-    version="0.1.0",
+    version="0.1.1",
     zip_safe=False,
 )

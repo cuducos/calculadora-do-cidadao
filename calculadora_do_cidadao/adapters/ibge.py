@@ -26,3 +26,15 @@ class IbgeAdapter(Adapter):
         self.last_year = year
 
         yield reference_date, value
+
+
+class Ipca(IbgeAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA/Serie_Historica/ipca_SerieHist.zip"
+
+
+class Ipca15(IbgeAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_15/Series_Historicas/ipca-15_SerieHist.zip"
+
+
+class Inpc(IbgeAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/INPC/Serie_Historica/inpc_SerieHist.zip"

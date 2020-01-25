@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from calculadora_do_cidadao.adapters.ipca15 import Ipca15
+from calculadora_do_cidadao.adapters import Ipca15
 from calculadora_do_cidadao.base import AdapterDateNotAvailableError
 
 

@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from calculadora_do_cidadao.adapters.ipca import Ipca
+from calculadora_do_cidadao.adapters import Ipca
 from calculadora_do_cidadao.base import AdapterDateNotAvailableError
 
 
@@ -20,7 +20,7 @@ def test_data(original, value, target, expected, ipca_fixture, mocker):
     download.return_value.return_value.__enter__.return_value = ipca_fixture
     ipca = Ipca()
     assert len(ipca.data) == 312
-    assert ipca.adjust(original, value, target) == Decimal(expected)
+    assert ipca.adjust(original, value, target) == pytest.approx(Decimal(expected))
 
     msg = r"This adapter has data from 01/1994 to 12/2019\. 01/2020 is out of range\."
     with pytest.raises(AdapterDateNotAvailableError, match=msg):

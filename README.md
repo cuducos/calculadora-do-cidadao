@@ -18,12 +18,12 @@ $ pip install calculadora-do-cidadao
 
 Os adaptadores disponíveis são:
 
-* __IGP-M__: [`calcladora_do_cidadao.Igpm`](https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/)
-* __INPC__: [`calcladora_do_cidadao.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
-* __IPCA__: [`calcladora_do_cidadao.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
-* __IPCA-15__: [`calcladora_do_cidadao.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
-* __IPCA-E__: [`calcladora_do_cidadao.IpcaE`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9262-indice-nacional-de-precos-ao-consumidor-amplo-especial.html)
-* __Selic__: [`calcladora_do_cidadao.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
+* __IGP-M__: [`calculadora_do_cidadao.Igpm`](https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/)
+* __INPC__: [`calculadora_do_cidadao.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
+* __IPCA__: [`calculadora_do_cidadao.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
+* __IPCA-15__: [`calculadora_do_cidadao.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
+* __IPCA-E__: [`calculadora_do_cidadao.IpcaE`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9262-indice-nacional-de-precos-ao-consumidor-amplo-especial.html)
+* __Selic__: [`calculadora_do_cidadao.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
 
 Todos os adaptadores fazem o download dos dados na hora que a classe é instanciada. Esses dados ficam no atributo `data` da instância da classe do adaptador. Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
 
@@ -59,7 +59,7 @@ Out[5]: Decimal('5.279855889296777979447848574')
 
 ## Desenvolvendo novos adaptadores
 
-Todos os adaptadores herdam de `calcladora_do_cidadao.adapters.Adapter`.
+Todos os adaptadores herdam de `calculadora_do_cidadao.adapters.Adapter`.
 
 ### Método obrigatório
 

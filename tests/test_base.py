@@ -1,6 +1,6 @@
 import pytest
 
-from calculadora_do_cidadao.base import Adapter, AdapterNoImportMethod
+from calculadora_do_cidadao.adapters import Adapter, AdapterNoImportMethod
 
 
 class DummyAdapter(Adapter):

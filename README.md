@@ -18,18 +18,12 @@ $ pip install calculadora-do-cidadao
 
 Os adaptadores disponíveis são:
 
-<<<<<<< Updated upstream
-* __IPCA__: [`calculadora_do_cidadao.adapters.ibge.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
-* __IPCA-15__: [`calculadora_do_cidadao.adapters.ibge.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
-* __INPC__: [`calculadora_do_cidadao.adapters.ibge.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
-* __Selic__: [`calculadora_do_cidadao.adapters.selic.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
-=======
-* __INPC__: [`calculadora_do_cidadao.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
-* __IPCA__: [`calculadora_do_cidadao.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
-* __IPCA-15__: [`calculadora_do_cidadao.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
-* __IPCA-E__: [`calculadora_do_cidadao.IpcaE`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9262-indice-nacional-de-precos-ao-consumidor-amplo-especial.html)
-* __Selic__: [`calculadora_do_cidadao.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
->>>>>>> Stashed changes
+* __IGP-M__: [`calcladora_do_cidadao.Igpm`](https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/)
+* __INPC__: [`calcladora_do_cidadao.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
+* __IPCA__: [`calcladora_do_cidadao.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
+* __IPCA-15__: [`calcladora_do_cidadao.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)
+* __IPCA-E__: [`calcladora_do_cidadao.IpcaE`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9262-indice-nacional-de-precos-ao-consumidor-amplo-especial.html)
+* __Selic__: [`calcladora_do_cidadao.Selic`](https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic)
 
 Todos os adaptadores fazem o download dos dados na hora que a classe é instanciada. Esses dados ficam no atributo `data` da instância da classe do adaptador. Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
 
@@ -47,7 +41,7 @@ Todos os adaptadores tem o método `adjust` que recebe três argumentos:
 ```
 In [1]: from datetime import date
    ...: from decimal import Decimal
-   ...: from calculadora_do_cidadao.adapters.ibge import Ipca
+   ...: from calculadora_do_cidadao import Ipca
 
 In [2]: ipca = Ipca()
 
@@ -61,15 +55,11 @@ In [5]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
 Out[5]: Decimal('5.279855889296777979447848574')
 ```
 
-<<<<<<< Updated upstream
-[![asciicast](https://asciinema.org/a/295911.svg)](https://asciinema.org/a/295911)
-=======
 [![asciicast](https://asciinema.org/a/295920.svg)](https://asciinema.org/a/295920)
->>>>>>> Stashed changes
 
 ## Desenvolvendo novos adaptadores
 
-Todos os adaptadores herdam de `calcladora_do_cidadao.base.Adapter`.
+Todos os adaptadores herdam de `calcladora_do_cidadao.adapters.Adapter`.
 
 ### Método obrigatório
 

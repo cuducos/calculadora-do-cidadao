@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal
 from typing import NamedTuple
 
-from calculadora_do_cidadao.base import Adapter
+from calculadora_do_cidadao.adapters import Adapter
 from calculadora_do_cidadao.months import MONTHS
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 

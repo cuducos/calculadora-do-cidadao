@@ -4,8 +4,8 @@ from pathlib import Path
 
 from pytest import approx, mark, raises
 
-from calculadora_do_cidadao.adapters import Inpc, Ipca, Ipca15, IpcaE, Selic
-from calculadora_do_cidadao.base import AdapterDateNotAvailableError
+from calculadora_do_cidadao import Inpc, Ipca, Ipca15, IpcaE, Selic
+from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
 
 
 def get_fixture(adapter):
@@ -51,7 +51,7 @@ def get_error_msg_for_future(start_date, end_date):
     ),
 )
 def test_adapter_indexes(adapter, original, value, target, expected, mocker):
-    download = mocker.patch("calculadora_do_cidadao.base.Download")
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
     download.return_value.return_value.__enter__.return_value = get_fixture(adapter)
     instance = adapter()
     assert instance.adjust(original, value, target) == approx(Decimal(expected))
@@ -68,7 +68,7 @@ def test_adapter_indexes(adapter, original, value, target, expected, mocker):
     ),
 )
 def test_adapter_range(adapter, length, start_date, end_date, mocker):
-    download = mocker.patch("calculadora_do_cidadao.base.Download")
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
     download.return_value.return_value.__enter__.return_value = get_fixture(adapter)
     instance = adapter()
     assert len(instance.data) == length

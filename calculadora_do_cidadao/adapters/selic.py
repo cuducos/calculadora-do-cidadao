@@ -31,9 +31,5 @@ class Selic(Adapter):
             if value is None:
                 continue
 
-            try:
-                reference = DateField.deserialize(f"{MONTHS[month]}/{year}")
-            except ValueError:
-                continue
-
+            reference = DateField.deserialize(f"{MONTHS[month]}/{year}")
             yield reference, value

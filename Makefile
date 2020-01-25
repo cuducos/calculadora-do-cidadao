@@ -7,5 +7,6 @@ clean:
 	@rm -rf .tox
 	@rm -rf calculadora_do_cidadao.egg-info
 	@rm -rf dist
+	@rm -rf htmlcov
 	@find . -iname "*.pyc" | xargs rm -rf
 	@find . -iname "__pycache__" | xargs rm -rf

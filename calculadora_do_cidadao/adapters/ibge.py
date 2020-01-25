@@ -37,11 +37,8 @@ class IbgeAdapter(Adapter):
         except KeyError:
             return
 
-        try:
-            value = PercentField.deserialize(f"{value}%")
-            reference = DateField.deserialize(f"{month}/{year}")
-        except ValueError:
-            return
+        value = PercentField.deserialize(f"{value}%")
+        reference = DateField.deserialize(f"{month}/{year}")
 
         self.last_year = year
         yield reference, value

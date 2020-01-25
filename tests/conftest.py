@@ -19,27 +19,3 @@ def zip_file():
             archive.write(fixture, arcname=fixture.name)
 
         yield path
-
-
-def get_fixture(name):
-    return Path(__file__).parent / "fixtures" / name
-
-
-@fixture
-def ipca_fixture():
-    return get_fixture("ipca.xls")
-
-
-@fixture
-def selic_fixture():
-    return get_fixture("selic.html")
-
-
-@fixture
-def ipca15_fixture():
-    return get_fixture("ipca15.xls")
-
-
-@fixture
-def inpc_fixture():
-    return get_fixture("inpc.xls")

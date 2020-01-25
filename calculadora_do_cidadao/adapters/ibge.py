@@ -19,13 +19,19 @@ class IbgeAdapter(Adapter):
         if month not in MONTHS.keys():
             return
 
-        year = int(year or self.last_year)
+        if year is None:
+            year = ""
+
+        year = int(year.strip() or self.last_year)
         month = MONTHS[month]
         reference_date = self.round_date(date(year, month, 1))
         value = Decimal(value) / 100
         self.last_year = year
-
         yield reference_date, value
+
+
+class Inpc(IbgeAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/INPC/Serie_Historica/inpc_SerieHist.zip"
 
 
 class Ipca(IbgeAdapter):
@@ -36,5 +42,5 @@ class Ipca15(IbgeAdapter):
     url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_15/Series_Historicas/ipca-15_SerieHist.zip"
 
 
-class Inpc(IbgeAdapter):
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/INPC/Serie_Historica/inpc_SerieHist.zip"
+class IpcaE(IbgeAdapter):
+    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_E/Series_Historicas/ipca-e_SerieHist.zip"

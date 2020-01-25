@@ -4,7 +4,7 @@ from pathlib import Path
 
 from pytest import approx, mark, raises
 
-from calculadora_do_cidadao import Inpc, Ipca, Ipca15, IpcaE, Selic
+from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic
 from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
 
 
@@ -33,6 +33,9 @@ def get_error_msg_for_future(start_date, end_date):
 @mark.parametrize(
     "adapter,original,value,target,expected",
     (
+        (Igpm, date(2018, 7, 6), None, None, "1.089562719284143684871778501"),
+        (Igpm, date(2014, 7, 8), 7, None, "9.695966517693585432732393804"),
+        (Igpm, date(1998, 7, 12), 3, date(2006, 7, 1), "6.880958439252658773596604453"),
         (Inpc, date(2014, 3, 6), None, None, "1.361007124894175467688242800"),
         (Inpc, date(2011, 5, 8), 9, None, "14.373499236614377437778943450"),
         (Inpc, date(2009, 1, 12), 5, date(2013, 8, 1), "6.410734265150376567640231785"),
@@ -60,6 +63,7 @@ def test_adapter_indexes(adapter, original, value, target, expected, mocker):
 @mark.parametrize(
     "adapter,length,start_date,end_date",
     (
+        (Igpm, 367, date(1989, 6, 1), date(2019, 12, 1)),
         (Inpc, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca15, 312, date(1994, 1, 1), date(2019, 12, 1)),

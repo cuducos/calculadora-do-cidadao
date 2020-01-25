@@ -2,7 +2,10 @@ from datetime import date
 from decimal import Decimal
 from typing import NamedTuple
 
+from rows.fields import PercentField
+
 from calculadora_do_cidadao.adapters import Adapter
+from calculadora_do_cidadao.fields import DateField
 from calculadora_do_cidadao.months import MONTHS
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
@@ -22,18 +25,26 @@ class IbgeAdapter(Adapter):
         """Serialize used for different IBGE price adjustment indexes."""
         self.last_year = getattr(self, "last_year", None)
         year, month, value = row
-        if month not in MONTHS.keys():
+        if value is None or month is None:
             return
 
         if year is None:
             year = ""
+        year = year.strip() or self.last_year
 
-        year = int(year.strip() or self.last_year)
-        month = MONTHS[month]
-        reference_date = self.round_date(date(year, month, 1))
-        value = Decimal(value) / 100
+        try:
+            month = MONTHS[month.capitalize()]
+        except KeyError:
+            return
+
+        try:
+            value = PercentField.deserialize(f"{value}%")
+            reference = DateField.deserialize(f"{month}/{year}")
+        except ValueError:
+            return
+
         self.last_year = year
-        yield reference_date, value
+        yield reference, value
 
 
 class Inpc(IbgeAdapter):

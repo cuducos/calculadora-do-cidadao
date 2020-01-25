@@ -2,7 +2,7 @@ from datetime import date
 from typing import NamedTuple
 
 from calculadora_do_cidadao.adapters import Adapter
-from calculadora_do_cidadao.fields import PercentField
+from calculadora_do_cidadao.fields import DateField, PercentField
 from calculadora_do_cidadao.months import MONTHS
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
@@ -26,8 +26,14 @@ class Selic(Adapter):
         """As each row contains more than one index this method might yield
         more than one `calculadora_do_cidadao.typing.Index`."""
         for year in YEARS:
-            value = getattr(row, f"field_{year}")
-            month = MONTHS[getattr(row, "mesano")]
+            keys = (f"field_{year}", "mesano")
+            value, month = (getattr(row, key) for key in keys)
             if value is None:
                 continue
-            yield self.round_date(date(year, month, 1)), value
+
+            try:
+                reference = DateField.deserialize(f"{MONTHS[month]}/{year}")
+            except ValueError:
+                continue
+
+            yield reference, value

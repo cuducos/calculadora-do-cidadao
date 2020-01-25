@@ -1,19 +1,20 @@
+from calendar import month_abbr
 from itertools import chain, cycle
 
 
 SHORT = (
-    "JAN",
-    "FEV",
-    "MAR",
-    "ABR",
-    "MAI",
-    "JUN",
-    "JUL",
-    "AGO",
-    "SET",
-    "OUT",
-    "NOV",
-    "DEZ",
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out",
+    "Nov",
+    "Dez",
 )
 COMPLETE = (
     "Janeiro",
@@ -29,4 +30,5 @@ COMPLETE = (
     "Novembro",
     "Dezembro",
 )
-MONTHS = dict(zip(chain(SHORT, COMPLETE), cycle(range(1, 13))))
+
+MONTHS = dict(zip(chain(SHORT, COMPLETE), cycle(month_abbr[1:13])))

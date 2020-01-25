@@ -18,6 +18,7 @@ $ pip install calculadora-do-cidadao
 
 Os adaptadores disponíveis são:
 
+* __IGP-M__: [`calcladora_do_cidadao.Igpm`](https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/)
 * __INPC__: [`calcladora_do_cidadao.Inpc`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html)
 * __IPCA__: [`calcladora_do_cidadao.Ipca`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html)
 * __IPCA-15__: [`calcladora_do_cidadao.Ipca15`](https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html)

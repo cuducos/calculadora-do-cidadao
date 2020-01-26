@@ -1,13 +1,19 @@
 from abc import ABCMeta, abstractmethod
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 from typing import Iterable, NamedTuple, Optional, Union
 
-from rows import import_from_html
+from rows import export_to_csv, import_from_csv, import_from_dicts, import_from_html
+from rows.fields import DateField, DecimalField
 from rows.plugins.xls import import_from_xls
 
 from calculadora_do_cidadao.download import Download
-from calculadora_do_cidadao.typing import IndexesGenerator, MaybeIndexesGenerator
+from calculadora_do_cidadao.typing import (
+    IndexDictionary,
+    IndexesGenerator,
+    MaybeIndexesGenerator,
+)
 
 
 class AdapterNoImportMethod(Exception):
@@ -26,12 +32,20 @@ class Adapter(metaclass=ABCMeta):
     """This is the base adapter, all adapters should inherit from it. Its
     children require at least a `url` and `file_type` class variables."""
 
-    def __init__(self) -> None:
-        """The initialization of the Adapter consists of three steps. First it
-        tries to infer the `rows` import method to use from the `file_type`
-        class variable (which can be `html` or `xls`). Then it uses the
-        `Download` class to store index data. Finally, if the source data is
-        disaggregated, it calls the `aggregate` method.
+    def __init__(self, exported_csv: Path = None) -> None:
+        """The initialization of the Adapter consists of four steps.
+
+        First, it tries to infer the `rows` import method to use from the
+        `file_type` class variable (which can be `html` or `xls`).
+
+        Then it detects whether data will come from a download or from an
+        exported CSV file.
+
+        If it comes from a download, it uses the `Download` class to store
+        index data.
+
+        Finally, if the source data is disaggregated, it calls the `aggregate`
+        method.
         """
         functions = {"html": import_from_html, "xls": import_from_xls}
         try:
@@ -43,11 +57,16 @@ class Adapter(metaclass=ABCMeta):
             )
             raise AdapterNoImportMethod(msg)
 
-        self.data = {key: value for key, value in self.download()}
+        self.data: IndexDictionary = {}
+        if exported_csv:
+            self.data = {key: value for key, value in self.from_csv(exported_csv)}
+        else:
+            self.data = {key: value for key, value in self.download()}
+            if self.should_aggregate:
+                self.aggregate()
+
         if self.data:
             self.most_recent_date = max(self.data.keys())
-        if self.should_aggregate:
-            self.aggregate()
 
     @property
     def import_kwargs(self) -> Iterable[dict]:
@@ -156,3 +175,14 @@ class Adapter(metaclass=ABCMeta):
             for kwargs in self.import_kwargs:
                 for data in self.read_from(path, **kwargs):
                     yield from (row for row in self.serialize(data) if row)
+
+    def to_csv(self, path: Path) -> Path:
+        data = (
+            {"date": key, "value": self.data[key]} for key in sorted(self.data.keys())
+        )
+        export_to_csv(import_from_dicts(data), path)
+        return path
+
+    def from_csv(self, path: Path) -> IndexesGenerator:
+        fields = {"date": DateField, "value": DecimalField}
+        yield from import_from_csv(path, force_types=fields)

@@ -1,7 +1,23 @@
 Uso
 ===
 
-Todos os adaptadores fazem o download dos dados na hora que a classe é instanciada. Esses dados ficam no atributo `data` da instância da classe do adaptador. Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
+Todos os adaptadores podem sem iniciados sem argumento algum. Nesse caso, os adaptadores fazem o download dos dados na hora que a classe é instanciada. Ou seja, criar uma instância demora e **é recomendado que sua aplicação faça isso na inicialização, e não a cada uso**.
+
+Como alternativa, caso você já tenha salvo esses dados localmente (ver :ref:`Exportando os dados`), é possível iniciar qualquer adaptador passando um `pathlib.Path` de onde ele deve ler os dados.
+
+::
+
+    from pathlib import Path
+
+    from calculadora_do_cidadao import Ipca
+
+
+    backup = Path("backup.csv")
+
+    ipca = Ipca()  # vai fazer o download nesse momento
+    ipca.to_csv(backup)
+
+    ipca = Ipca(backup)  # não fará o download, carregará do backup
 
 Adaptadores disponíveis
 -----------------------
@@ -30,8 +46,9 @@ Argumento        Obrigatório Tipo                                Descrição   
 `target_date`    ❌          `datetime.date`                     Data para quando o valor tem que ser corrigido. `datetime.date.today()` 
 ================ =========== =================================== =============================================== =======================
 
+
 Exemplo
--------
+~~~~~~~
 
 ::
 
@@ -49,3 +66,15 @@ Exemplo
 
     In [5]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
     Out[5]: Decimal('5.279855889296777979447848574')
+
+.. _Exportando os dados:
+
+Exportando os dados
+-------------------
+
+Todos os adaptadores tem o método `to_csv` (:meth:`calculadora_do_cidadao.adapters.Adapter.to_csv`) para exportar os dados no formato CSV. O único argumento que esse método recebe é um `pathlib.Path` que é o caminho do arquivo para onde os dados serão exportados.
+
+Importando os dados
+-------------------
+
+Todos os adaptadores tem o método `from_csv` (:meth:`calculadora_do_cidadao.adapters.Adapter.from_csv`) para importar os dados de um arquivo CSV. O único argumento que esse método recebe é um `pathlib.Path` que é o caminho do arquivo onde os dados estão. O arquivo deve ter duas colunas, `date` no formato `YYYY-MM-DD`, e `value` utilizando um ponto como separador das casas decimais.

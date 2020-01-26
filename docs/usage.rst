@@ -74,6 +74,12 @@ Exportando os dados
 
 Todos os adaptadores tem o método `to_csv` (:meth:`calculadora_do_cidadao.adapters.Adapter.to_csv`) para exportar os dados no formato CSV. O único argumento que esse método recebe é um `pathlib.Path` que é o caminho do arquivo para onde os dados serão exportados.
 
+Para exportar os dados de todos os índices (adaptadores) de uma vez só é só chamar o pacote pela linha de comando (será criado o arquivo `calculadora-do-cidadao.csv` com os dados):
+
+::
+
+    $ python -m calculadora_do_cidadao
+
 Importando os dados
 -------------------
 

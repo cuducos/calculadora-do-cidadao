@@ -1,5 +1,9 @@
 # Changelog
 
+**0.2.0** (Jan 25, 2020)
+  * Adds import/export method
+  * Adds the possibility to work offline by loading an exported CSV
+
 **0.1.1** (Jan 25, 2020)
   * Cleans up unused code
   * Updates documentation

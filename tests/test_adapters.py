@@ -1,18 +1,11 @@
 from datetime import date
 from decimal import Decimal
-from pathlib import Path
 
 from pytest import approx, mark, raises
 
 from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic
 from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
-
-
-def get_fixture(adapter):
-    name = adapter.__name__.lower()
-    directory = Path(__file__).parent / "fixtures"
-    fixture, *_ = directory.glob(f"{name}.*")
-    return fixture
+from tests import get_fixture
 
 
 def get_error_msg_for_future(start_date, end_date):

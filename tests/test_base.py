@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 import pytest
 
 from calculadora_do_cidadao.adapters import Adapter, AdapterNoImportMethod
-from tests.test_adapters import get_fixture
+from tests import get_fixture
 
 
 class DummyAdapter(Adapter):
@@ -83,8 +83,13 @@ def test_to_csv(mocker):
 
 def test_from_csv():
     exported = get_fixture(GoodAdapter)
-    adapter = GoodAdapter(exported)
-    assert adapter.data == {
+    all_data = get_fixture("calculadora-do-cidadao")
+
+    adapter1 = GoodAdapter(exported)
+    assert adapter1.data == {
         date(2014, 7, 8): Decimal("7.1"),
         date(1998, 7, 12): Decimal("3.0"),
     }
+
+    adapter2 = GoodAdapter(all_data)
+    assert adapter2.data == {date(1998, 7, 12): Decimal("3.0")}

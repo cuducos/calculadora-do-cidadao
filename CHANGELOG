@@ -1,5 +1,8 @@
 # Changelog
 
+**0.3.1** (Jan 27, 2020)
+  * Allows adapters to read data from the export all CLI feature
+
 **0.3.0** (Jan 26, 2020)
   * Adds command to export all data to CSV
 

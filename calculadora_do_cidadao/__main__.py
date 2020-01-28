@@ -1,36 +1,44 @@
 from pathlib import Path
 from inspect import isclass
-from typing import Iterator
+from typing import Iterable, Type
 
 from rows import export_to_csv, import_from_dicts
+from typer import Typer, echo
 
 import calculadora_do_cidadao
 from calculadora_do_cidadao.adapters import Adapter
 
 
-def data() -> Iterator[dict]:
-    """Iterate over every adapter available, yielding their data row by row as
-    a dictionary, ready for `rows.import_from_dict`."""
+DEFAULT_EXPORT_FILE = Path("calculadora-do-cidadao.csv")
+cli = Typer()
+
+
+def get_adapters() -> Iterable[Type[Adapter]]:
+    """Generator with all adapters available in this module."""
     for _obj in dir(calculadora_do_cidadao):
         obj = getattr(calculadora_do_cidadao, _obj)
-        if not isclass(obj) or not issubclass(obj, Adapter):  # discard non-adapters
-            continue
 
-        adapter = obj()
-        for key in sorted(adapter.data):
-            yield {
-                "date": key,
-                "value": adapter.data[key],
-                "serie": obj.__name__.lower(),
-            }
+        # discard non-adapters
+        if isclass(obj) and issubclass(obj, Adapter):
+            yield obj
 
 
-def main(path: Path) -> None:
+def data() -> Iterable[dict]:
+    """Generator to get all export data from adapters in this module."""
+    adapters = tuple(get_adapters())
+    total = len(adapters)
+    for count, adapter in enumerate(adapters, 1):
+        name = adapter.__name__.upper()
+        echo(f"[{count} of {total}] Exporting {name} data…")
+        yield from adapter().export(include_name=True)
+
+
+@cli.command()
+def export(path: Path = DEFAULT_EXPORT_FILE) -> None:
     """Export all data to CSV."""
     table = import_from_dicts(data())
     export_to_csv(table, path)
 
 
 if __name__ == "__main__":
-    path = Path("calculadora-do-cidadao.csv")
-    main(path)
+    cli()

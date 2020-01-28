@@ -31,6 +31,42 @@ def test_file_types():
         DummyAdapter()
 
 
+def test_export_index(mocker):
+    download = mocker.patch.object(GoodAdapter, "download")
+    download.return_value = (
+        (date(2014, 7, 8), Decimal("7.1")),
+        (date(1998, 7, 12), Decimal("3.0")),
+    )
+    adapter = GoodAdapter()
+
+    assert adapter.export_index(date(2014, 7, 8)) == {
+        "date": date(2014, 7, 8),
+        "value": Decimal("7.1"),
+    }
+    assert adapter.export_index(date(2014, 7, 8), include_name=True) == {
+        "date": date(2014, 7, 8),
+        "value": Decimal("7.1"),
+        "serie": "goodadapter",
+    }
+
+
+def test_export(mocker):
+    download = mocker.patch.object(GoodAdapter, "download")
+    download.return_value = (
+        (date(2014, 7, 8), Decimal("7.1")),
+        (date(1998, 7, 12), Decimal("3.0")),
+    )
+    adapter = GoodAdapter()
+    assert tuple(adapter.export()) == (
+        {"date": date(1998, 7, 12), "value": Decimal("3.0")},
+        {"date": date(2014, 7, 8), "value": Decimal("7.1")},
+    )
+    assert tuple(adapter.export(include_name=True)) == (
+        {"date": date(1998, 7, 12), "value": Decimal("3.0"), "serie": "goodadapter"},
+        {"date": date(2014, 7, 8), "value": Decimal("7.1"), "serie": "goodadapter"},
+    )
+
+
 def test_to_csv(mocker):
     download = mocker.patch.object(GoodAdapter, "download")
     download.return_value = (

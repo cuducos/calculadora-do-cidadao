@@ -176,11 +176,25 @@ class Adapter(metaclass=ABCMeta):
                 for data in self.read_from(path, **kwargs):
                     yield from (row for row in self.serialize(data) if row)
 
+    def export_index(self, key, include_name: bool = False) -> dict:
+        """Export a given index as a dictionary to be used with
+        `rows.import_from_dicts`."""
+        data = {"date": key, "value": self.data[key]}
+
+        if include_name:
+            data["serie"] = self.__class__.__name__.lower()
+
+        return data
+
+    def export(self, include_name: bool = False) -> Iterable[dict]:
+        """Wraps adapter's data in a sequence of dictionaries to be used with
+        `rows.import_from_dicts`."""
+        keys = sorted(self.data)
+        yield from (self.export_index(key, include_name) for key in keys)
+
     def to_csv(self, path: Path) -> Path:
-        data = (
-            {"date": key, "value": self.data[key]} for key in sorted(self.data.keys())
-        )
-        export_to_csv(import_from_dicts(data), path)
+        table = import_from_dicts(self.export())
+        export_to_csv(table, path)
         return path
 
     def from_csv(self, path: Path) -> IndexesGenerator:

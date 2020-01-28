@@ -4,12 +4,31 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic
-from calculadora_do_cidadao.__main__ import main
+from calculadora_do_cidadao.__main__ import data, export, get_adapters
+
 
 ADAPTERS = (Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic)
 
 
-def test_export_all(mocker):
+def test_get_adapters():
+    assert set(get_adapters()) == set(ADAPTERS)
+
+
+def test_data(mocker):
+    for count, Adapter in enumerate(ADAPTERS, 1):
+        download = mocker.patch.object(Adapter, "download")
+        download.return_value = (
+            (date(2019, 12, 1), Decimal(count)),
+            (date(2020, 1, 1), Decimal(count * 1.5)),
+        )
+
+    result = tuple(data())
+    assert len(result) == 2 * len(ADAPTERS)
+    for dictionary in result:
+        assert len(dictionary) == 3
+
+
+def test_export(mocker):
     for count, Adapter in enumerate(ADAPTERS, 1):
         download = mocker.patch.object(Adapter, "download")
         download.return_value = (
@@ -19,7 +38,7 @@ def test_export_all(mocker):
 
     with TemporaryDirectory() as _tmp:
         path = Path(_tmp) / "calculadora-do-cidadao.csv"
-        main(path)
+        export(path)
         content = path.read_text()
 
     for Adapter in ADAPTERS:

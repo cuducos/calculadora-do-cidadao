@@ -3,11 +3,19 @@ from decimal import Decimal
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic
+from calculadora_do_cidadao import (
+    AllUrbanCityAverage,
+    Igpm,
+    Inpc,
+    Ipca,
+    Ipca15,
+    IpcaE,
+    Selic,
+)
 from calculadora_do_cidadao.__main__ import data, export, get_adapters
 
 
-ADAPTERS = (Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic)
+ADAPTERS = (AllUrbanCityAverage, Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic)
 
 
 def test_get_adapters():

@@ -3,7 +3,15 @@ from decimal import Decimal
 
 from pytest import approx, mark, raises
 
-from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic
+from calculadora_do_cidadao import (
+    AllUrbanCityAverage,
+    Igpm,
+    Inpc,
+    Ipca,
+    Ipca15,
+    IpcaE,
+    Selic,
+)
 from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
 from tests import get_fixture
 
@@ -26,6 +34,27 @@ def get_error_msg_for_future(start_date, end_date):
 @mark.parametrize(
     "adapter,original,value,target,expected",
     (
+        (
+            AllUrbanCityAverage,
+            date(2000, 1, 1),
+            None,
+            None,
+            "1.526881275841701122268163024",
+        ),
+        (
+            AllUrbanCityAverage,
+            date(2019, 1, 1),
+            42,
+            None,
+            "42.96874616599320069813553488",
+        ),
+        (
+            AllUrbanCityAverage,
+            date(2019, 1, 1),
+            3,
+            date(2006, 7, 1),
+            "2.409042517403917316056721534",
+        ),
         (Igpm, date(2018, 7, 6), None, None, "1.089562719284143684871778501"),
         (Igpm, date(2014, 7, 8), 7, None, "9.695966517693585432732393804"),
         (Igpm, date(1998, 7, 12), 3, date(2006, 7, 1), "6.880958439252658773596604453"),
@@ -42,8 +71,14 @@ def get_error_msg_for_future(start_date, end_date):
         (IpcaE, date(2012, 5, 8), 3, None, "4.577960384607494629737626417"),
         (IpcaE, date(1999, 11, 10), 5, date(2002, 9, 5), "6.0688157145076915108509866"),
         (Selic, date(2019, 11, 1), None, None, "1.0037"),
-        (Selic, date(2019, 10, 1), None, None, "1.00751406"),
-        (Selic, date(2019, 9, 1), None, None, "1.012350127488"),
+        (Selic, date(2019, 10, 1), 3, None, "3.02254218"),
+        (
+            Selic,
+            date(2019, 9, 1),
+            5,
+            date(2002, 9, 5),
+            "0.6946147832098614982148570275",
+        ),
     ),
 )
 def test_adapter_indexes(adapter, original, value, target, expected, mocker):
@@ -56,6 +91,7 @@ def test_adapter_indexes(adapter, original, value, target, expected, mocker):
 @mark.parametrize(
     "adapter,length,start_date,end_date",
     (
+        (AllUrbanCityAverage, 876, date(1947, 1, 1), date(2019, 12, 1)),
         (Igpm, 367, date(1989, 6, 1), date(2019, 12, 1)),
         (Inpc, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca, 312, date(1994, 1, 1), date(2019, 12, 1)),

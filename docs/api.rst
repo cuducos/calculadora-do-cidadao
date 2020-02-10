@@ -16,6 +16,13 @@ Adaptador Base
 Adaptadores
 -----------
 
+FED's Consumer Price Index for All Urban Consumers: All Items
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. AllUrbanCityAverage:
+.. autoclass:: calculadora_do_cidadao.AllUrbanCityAverage
+   :members:
+
 IGP-M
 ~~~~~
 

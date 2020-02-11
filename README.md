@@ -30,12 +30,42 @@ Out[5]: Decimal('5.279855889296777979447848574')
 
 [![asciicast](https://asciinema.org/a/295920.svg)](https://asciinema.org/a/295920)
 
-## Testes
+## Mini-guia de contribuição
 
-A suíte de testes roda com [`tox`](https://pypi.org/project/tox/). Se você não tiver instalado, `pip install tox` deve resolver.
+### Testes
+
+A suíte de testes roda com diversas versões do Python via [`tox`](https://pypi.org/project/tox/). Se você não tiver instalado, `pip install tox` deve resolver.
 
 ```console
 $ tox
 ```
+
+Se quiser rodar os testes mais rapidamente apenas para a versão em uso, é possível utilizar o [`pytest`](https://docs.pytest.org/), mas é necessário instalar alguns pacotes extras:
+
+```console
+$ pip install pytest pytest-black pytest-cov pytest-mock pytest-mypy
+```
+
+#### Escrevendo testes de novos adaptadores
+
+Quando criar m novo adaptador, escreva ao menos três casos de teste para o método `adjust`:
+
+1. Utilizando apenas um argumento (data original)
+1. Utilizando dois argumentos (data original mais valor personalizado)
+1. Utilizando três argumentos (data original, valor personalizado e data final)
+
+### Documentação
+
+Para visualizar alterações na documentação, é preciso instalar alguns pacotes e utilizar a o [Sphinx](https://www.sphinx-doc.org/en/):
+
+```console
+$ pip install -e .
+$ pip install -r docs/requirements.txt
+$ sphinx-build docs docs/_build
+```
+
+Depois, é só acessar `docs/_build/index.html`.
+
+### Limpeza de arquivos gerados automaticamente
 
 Para limpar os arquivos gerados automaticamente, existe o atalho `make clean`.

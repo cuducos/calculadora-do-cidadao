@@ -47,6 +47,12 @@ SELIC
 .. autoclass:: calculadora_do_cidadao.Selic
    :members:
 
+Família CPI
+~~~~~
+
+.. autoclass:: calculadora_do_cidadao.Cpiauscsl
+   :members:
+
 Download
 --------
 

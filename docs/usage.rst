@@ -25,6 +25,7 @@ Adaptadores disponíveis
 ============================================================================================================================================ ==================================================
 Índice                                                                                                                                       Módulo
 ============================================================================================================================================ ==================================================
+`CPI - AUCSL  <https://fred.stlouisfed.org/series/CPIAUCSL>`_                                                                                :class:`calculadora_do_cidadao.Cpiaucsl`
 `IGP-M <https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/>`_                                                              :class:`calculadora_do_cidadao.Igpm`
 `INPC <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html>`_                  :class:`calculadora_do_cidadao.Inpc`
 `IPCA <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html>`_            :class:`calculadora_do_cidadao.Ipca`
@@ -39,11 +40,11 @@ Uso de um adaptador
 Todos os adaptadores tem o método `adjust` (:meth:`calculadora_do_cidadao.adapters.Adapter.adjust`) que recebe três argumentos:
 
 ================ =========== =================================== =============================================== =======================
-Argumento        Obrigatório Tipo                                Descrição                                       Valor padrão 
+Argumento        Obrigatório Tipo                                Descrição                                       Valor padrão
 ================ =========== =================================== =============================================== =======================
-`original_date`  ✅          `datetime.date`                     Data original do valor a ser corrigido.  
-`value`          ❌          `decimal.Decimal`, `float` ou `int` Valor a ser corrigido.                          `decimal.Decimal('1')` 
-`target_date`    ❌          `datetime.date`                     Data para quando o valor tem que ser corrigido. `datetime.date.today()` 
+`original_date`  ✅          `datetime.date`                     Data original do valor a ser corrigido.
+`value`          ❌          `decimal.Decimal`, `float` ou `int` Valor a ser corrigido.                          `decimal.Decimal('1')`
+`target_date`    ❌          `datetime.date`                     Data para quando o valor tem que ser corrigido. `datetime.date.today()`
 ================ =========== =================================== =============================================== =======================
 
 

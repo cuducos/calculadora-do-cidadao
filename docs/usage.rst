@@ -25,7 +25,7 @@ Adaptadores disponíveis
 ============================================================================================================================================ ==================================================
 Índice                                                                                                                                       Módulo
 ============================================================================================================================================ ==================================================
-`CPI - AUCSL  <https://fred.stlouisfed.org/series/CPIAUCSL>`_                                                                                :class:`calculadora_do_cidadao.Cpiaucsl`
+`CPI - AUCSL  <https://fred.stlouisfed.org/series/CpiAllUrbanCityAverage>`_                                                                                :class:`calculadora_do_cidadao.CpiAllUrbanCityAverage`
 `IGP-M <https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/>`_                                                              :class:`calculadora_do_cidadao.Igpm`
 `INPC <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html>`_                  :class:`calculadora_do_cidadao.Inpc`
 `IPCA <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html>`_            :class:`calculadora_do_cidadao.Ipca`

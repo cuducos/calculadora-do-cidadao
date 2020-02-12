@@ -16,6 +16,13 @@ Adaptador Base
 Adaptadores
 -----------
 
+CpiAllUrbanCityAverage (FED's Consumer Price Index for All Urban Consumers: All Items (CpiAllUrbanCityAverage))
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. CpiAllUrbanCityAverage:
+.. autoclass:: calculadora_do_cidadao.CpiAllUrbanCityAverage
+   :members:
+
 IGP-M
 ~~~~~
 
@@ -45,12 +52,6 @@ SELIC
 ~~~~~
 
 .. autoclass:: calculadora_do_cidadao.Selic
-   :members:
-
-Família CPI
-~~~~~
-
-.. autoclass:: calculadora_do_cidadao.Cpiauscsl
    :members:
 
 Download

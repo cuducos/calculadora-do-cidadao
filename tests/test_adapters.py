@@ -3,7 +3,15 @@ from decimal import Decimal
 
 from pytest import approx, mark, raises
 
-from calculadora_do_cidadao import Igpm, Inpc, Ipca, Ipca15, IpcaE, Selic, Cpiaucsl
+from calculadora_do_cidadao import (
+    CpiAllUrbanCityAverage,
+    Igpm,
+    Inpc,
+    Ipca,
+    Ipca15,
+    IpcaE,
+    Selic,
+)
 from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
 from tests import get_fixture
 
@@ -44,8 +52,27 @@ def get_error_msg_for_future(start_date, end_date):
         (Selic, date(2019, 11, 1), None, None, "1.0037"),
         (Selic, date(2019, 10, 1), None, None, "1.00751406"),
         (Selic, date(2019, 9, 1), None, None, "1.012350127488"),
-        (Cpiaucsl, date(2000, 1, 1), None, None, "1.526881275841701122268163024"),
-        (Cpiaucsl, date(2019, 1, 1), None, None, "1.023065384904600016622274640"),
+        (
+            CpiAllUrbanCityAverage,
+            date(2000, 1, 1),
+            None,
+            None,
+            "1.526881275841701122268163024",
+        ),
+        (
+            CpiAllUrbanCityAverage,
+            date(2019, 1, 1),
+            None,
+            None,
+            "1.023065384904600016622274640",
+        ),
+        (
+            CpiAllUrbanCityAverage,
+            date(2019, 1, 1),
+            3,
+            date(2006, 7, 1),
+            "2.409042517403917316056721534",
+        ),
     ),
 )
 def test_adapter_indexes(adapter, original, value, target, expected, mocker):
@@ -58,13 +85,13 @@ def test_adapter_indexes(adapter, original, value, target, expected, mocker):
 @mark.parametrize(
     "adapter,length,start_date,end_date",
     (
+        (CpiAllUrbanCityAverage, 876, date(1947, 1, 1), date(2019, 12, 1)),
         (Igpm, 367, date(1989, 6, 1), date(2019, 12, 1)),
         (Inpc, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca15, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (IpcaE, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Selic, 300, date(1995, 1, 1), date(2019, 12, 1)),
-        (Cpiaucsl, 876, date(1947, 1, 1), date(2019, 12, 1)),
     ),
 )
 def test_adapter_range(adapter, length, start_date, end_date, mocker):

@@ -8,7 +8,7 @@ from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 
 URL = "https://fred.stlouisfed.org/graph/fredgraph.xls"
-URL_PARAMS = {"id": "CpiAllUrbanCityAverage"}
+URL_PARAMS = {"id": "CPIAUCSL"}
 
 
 class AllUrbanCityAverage(Adapter):

@@ -1,5 +1,8 @@
 # Changelog
 
+**0.4.2** (Jun 15, 2020)
+  * Fixes URL for FED's Consumer Price Index for All Urban Consumers: All Items
+
 **0.4.1** (Feb 22, 2020)
   * Refactors FED's Consumer Price Index for All Urban Consumers: All Items
 

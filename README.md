@@ -43,7 +43,7 @@ $ tox
 Se quiser rodar os testes mais rapidamente apenas para a versão em uso, é possível utilizar o [`pytest`](https://docs.pytest.org/), mas é necessário instalar alguns pacotes extras:
 
 ```console
-$ pip install pytest pytest-black pytest-cov pytest-mock pytest-mypy
+$ pip install -r requirements-development.txt
 ```
 
 #### Escrevendo testes de novos adaptadores

@@ -29,6 +29,5 @@ class DateField(fields.DateField):
                 dt_object = datetime.datetime.strptime(value, date_format)
             except ValueError:
                 continue
-            else:
-                return datetime.date(dt_object.year, dt_object.month, dt_object.day)
+            return dt_object.date()
         raise ValueError("Cannot parse value as date: {}".format(value))

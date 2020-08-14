@@ -75,24 +75,24 @@ Formatos dos campos de data
 
 Os adaptadores aceitam diversos formatos de data, como descrevem os exemplos a seguir:
 
-================================ =================== ===========================
-Entrada                          Tipo                Saída
-================================ =================== ===========================
-`datetime.date(2018, 7, 6)`      `datetime.date`     `datetime.date(2018, 7, 6)`
-`datetime(2018, 7, 6, 21, 0, 0)` `datetime.datetime` `datetime.date(2018, 7, 6)`
-`"2018-07-06T21:00:00"`          `str`               `datetime.date(2018, 7, 6)`
-`"2018-07-06 21:00:00"`          `str`               `datetime.date(2018, 7, 6)`
-`"2018-07-06"`                   `str`               `datetime.date(2018, 7, 6)`
-`"06/07/2018"`                   `str`               `datetime.date(2018, 7, 6)`
-`"2018-07"`                      `str`               `datetime.date(2018, 7, 1)`
-`"Jul/2018"`                     `str`               `datetime.date(2018, 7, 1)`
-`"Jul-2018"`                     `str`               `datetime.date(2018, 7, 1)`
-`"Jul 2018"`                     `str`               `datetime.date(2018, 7, 1)`
-`"07/2018"``                     `str`               `datetime.date(2018, 7, 1)`
-`"2018"`                         `str`               `datetime.date(2018, 1, 1)`
-`1530925200`                     `int` (timestamp)   `datetime.date(2018, 7, 6)`
-`1530925200.0`                   `float` (timestamp) `datetime.date(2018, 7, 6)`
-================================ =================== ===========================
+========================================= =================== ===========================
+Entrada                                   Tipo                Saída
+========================================= =================== ===========================
+`datetime.date(2018, 7, 6)`               `datetime.date`     `datetime.date(2018, 7, 6)`
+`datetime.datetime(2018, 7, 6, 21, 0, 0)` `datetime.datetime` `datetime.date(2018, 7, 6)`
+`"2018-07-06T21:00:00"`                   `str`               `datetime.date(2018, 7, 6)`
+`"2018-07-06 21:00:00"`                   `str`               `datetime.date(2018, 7, 6)`
+`"2018-07-06"`                            `str`               `datetime.date(2018, 7, 6)`
+`"06/07/2018"`                            `str`               `datetime.date(2018, 7, 6)`
+`"2018-07"`                               `str`               `datetime.date(2018, 7, 1)`
+`"Jul/2018"`                              `str`               `datetime.date(2018, 7, 1)`
+`"Jul-2018"`                              `str`               `datetime.date(2018, 7, 1)`
+`"Jul 2018"`                              `str`               `datetime.date(2018, 7, 1)`
+`"07/2018"``                              `str`               `datetime.date(2018, 7, 1)`
+`"2018"`                                  `str`               `datetime.date(2018, 1, 1)`
+`1530925200`                              `int` (timestamp)   `datetime.date(2018, 7, 6)`
+`1530925200.0`                            `float` (timestamp) `datetime.date(2018, 7, 6)`
+========================================= =================== ===========================
 
 .. _Exportando os dados:
 

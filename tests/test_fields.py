@@ -1,4 +1,4 @@
-import datetime
+from datetime import date, datetime
 from decimal import Decimal
 
 import pytest
@@ -6,21 +6,39 @@ import pytest
 from calculadora_do_cidadao.fields import DateField, PercentField
 
 
-def test_PercentField():
-    assert PercentField.deserialize("12,37%") == Decimal("0.1237")
-    assert PercentField.deserialize("12.37%") == Decimal("0.1237")
+@pytest.mark.parametrize("value", ("12.37%", "12,37%"))
+def test_percent_field(value):
+    assert PercentField.deserialize(value) == Decimal("0.1237")
 
 
-def test_DateField():
-    assert DateField.deserialize("2020-07-31") == datetime.date(2020, 7, 31)
-    assert DateField.deserialize("31/07/2020") == datetime.date(2020, 7, 31)
-    assert DateField.deserialize("2020-07") == datetime.date(2020, 7, 1)
-    assert DateField.deserialize("07/2020") == datetime.date(2020, 7, 1)
-    assert DateField.deserialize("Jul/2020") == datetime.date(2020, 7, 1)
-    assert DateField.deserialize("2020") == datetime.date(2020, 1, 1)
-    assert DateField.deserialize(2020) == datetime.date(2020, 1, 1)
+@pytest.mark.parametrize(
+    "value",
+    (
+        date(2018, 7, 6),
+        datetime(2018, 7, 6, 21, 0, 0),
+        "2018-07-06T21:00:00",
+        "2018-07-06 21:00:00",
+        "2018-07-06",
+        "06/07/2018",
+        1530925200,
+        1530925200.0,
+    ),
+)
+def test_date_field_with_complete_dates(value):
+    assert DateField.deserialize(value) == date(2018, 7, 6)
 
-    with pytest.raises(ValueError):
-        DateField.deserialize(42)
+
+@pytest.mark.parametrize(
+    "value", ("2018-07", "Jul/2018", "Jul-2018", "Jul 2018", "07/2018",),
+)
+def test_date_field_with_incomplete_dates(value):
+    assert DateField.deserialize(value) == date(2018, 7, 1)
+
+
+def test_date_field_with_only_year():
+    assert DateField.deserialize("2018") == date(2018, 1, 1)
+
+
+def test_date_field_error():
     with pytest.raises(ValueError):
         DateField.deserialize("hello, world")

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 
 from pytest import approx, mark, raises
@@ -108,3 +108,29 @@ def test_adapter_range(adapter, length, start_date, end_date, mocker):
     future_date, msg = get_error_msg_for_future(start_date, end_date)
     with raises(AdapterDateNotAvailableError, match=msg):
         instance.adjust(future_date)
+
+
+@mark.parametrize(
+    "adapter,original,value,target",
+    (
+        (Ipca, date(2018, 7, 6), None, None),
+        (Ipca, datetime(2018, 7, 6, 21, 00, 00), None, None),
+        (Ipca, "2018-07-06T21:00:00", None, None),
+        (Ipca, "2018-07-06 21:00:00", None, None),
+        (Ipca, "2018-07-06", None, None),
+        (Ipca, "06/07/2018", None, None),
+        (Ipca, "2018-07", None, None),
+        (Ipca, "Jul/2018", None, None),
+        (Ipca, "Jul-2018", None, None),
+        (Ipca, "Jul 2018", None, None),
+        (Ipca, "07/2018", None, None),
+        (Ipca, 1530925200, None, None),
+        (Ipca, 1530925200.0, None, None),
+    ),
+)
+def test_string_date_inputs(adapter, original, value, target, mocker):
+    expected = approx(Decimal("1.051202206630561280035407253"))
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
+    download.return_value.return_value.__enter__.return_value = get_fixture(adapter)
+    instance = adapter()
+    assert instance.adjust(original, value, target) == expected

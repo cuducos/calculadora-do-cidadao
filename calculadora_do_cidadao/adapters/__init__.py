@@ -5,11 +5,13 @@ from pathlib import Path
 from typing import Iterable, NamedTuple, Optional, Union
 
 from rows import export_to_csv, import_from_csv, import_from_dicts, import_from_html
-from rows.fields import DateField, DecimalField
+from rows.fields import DecimalField
 from rows.plugins.xls import import_from_xls
 
 from calculadora_do_cidadao.download import Download
+from calculadora_do_cidadao.fields import DateField
 from calculadora_do_cidadao.typing import (
+    Date,
     IndexDictionary,
     IndexesGenerator,
     MaybeIndexesGenerator,
@@ -121,11 +123,12 @@ class Adapter(metaclass=ABCMeta):
             f"{wanted.month:0>2d}/{wanted.year} is out of range."
         )
 
-    def round_date(self, obj: date, validate: bool = False) -> date:
-        """Method to round `date` objects to hold `day = 1`, as indexes usually
+    def round_date(self, obj: Date, validate: bool = False) -> date:
+        """Method to round `Date` objects to hold `day = 1`, as indexes usually
         refers to monthly periods, not daily periods. It also validates if the
-        intended date is in the adapter data range."""
-        output = date(obj.year, obj.month, 1)
+        intended date is valid and in the adapter data range."""
+        parsed = DateField.deserialize(obj)
+        output = parsed.replace(day=1)
         if validate and output not in self.data.keys():
             msg = self.invalid_date_error_message(output)
             raise AdapterDateNotAvailableError(msg)
@@ -145,9 +148,9 @@ class Adapter(metaclass=ABCMeta):
 
     def adjust(
         self,
-        original_date: date,
+        original_date: Date,
         value: Union[Decimal, float, int, None] = 0,
-        target_date: Optional[date] = None,
+        target_date: Optional[Date] = None,
     ) -> Decimal:
         """Main method of an adapter API, the one that actually makes the
         monetary correction using adapter's data. It requires a `datetime.date`

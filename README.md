@@ -21,10 +21,10 @@ In [2]: ipca = Ipca()
 In [3]: ipca.adjust(date(2018, 7, 6))
 Out[3]: Decimal('1.051202206630561280035407253')
 
-In [4]: ipca.adjust(date(2014, 7, 8), 7)
+In [4]: ipca.adjust("2014-07-08", 7)
 Out[4]: Decimal('9.407523138792336916983267321')
 
-In [5]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
+In [5]: ipca.adjust("12/07/1998", 3, "01/07/2006")
 Out[5]: Decimal('5.279855889296777979447848574')
 ```
 

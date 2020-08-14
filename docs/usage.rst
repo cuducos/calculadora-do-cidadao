@@ -39,13 +39,13 @@ Uso de um adaptador
 
 Todos os adaptadores tem o método `adjust` (:meth:`calculadora_do_cidadao.adapters.Adapter.adjust`) que recebe três argumentos:
 
-================ =========== =================================== =============================================== =======================
-Argumento        Obrigatório Tipo                                Descrição                                       Valor padrão
-================ =========== =================================== =============================================== =======================
-`original_date`  ✅          `datetime.date`                     Data original do valor a ser corrigido.
-`value`          ❌          `decimal.Decimal`, `float` ou `int` Valor a ser corrigido.                          `decimal.Decimal('1')`
-`target_date`    ❌          `datetime.date`                     Data para quando o valor tem que ser corrigido. `datetime.date.today()`
-================ =========== =================================== =============================================== =======================
+================ =========== ============================================================= =============================================== =======================
+Argumento        Obrigatório Tipo                                                          Descrição                                       Valor padrão
+================ =========== ============================================================= =============================================== =======================
+`original_date`  ✅          `datetime.date`, `datetime.datetime`, `str`, `int` ou `float` Data original do valor a ser corrigido.
+`value`          ❌          `decimal.Decimal`, `float` ou `int`                           Valor a ser corrigido.                          `decimal.Decimal('1')`
+`target_date`    ❌          `datetime.date`, `datetime.datetime`, `str`, `int` ou `float` Data para quando o valor tem que ser corrigido. `datetime.date.today()`
+================ =========== ============================================================= =============================================== =======================
 
 
 Exemplo
@@ -67,6 +67,32 @@ Exemplo
 
     In [5]: ipca.adjust(date(1998, 7, 12), 3, date(2006, 7, 1))
     Out[5]: Decimal('5.279855889296777979447848574')
+
+.. _Formatos dos campos de data:
+
+Formatos dos campos de data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Os adaptadores aceitam diversos formatos de data, como descrevem os exemplos a seguir:
+
+================================ =================== ===========================
+Entrada                          Tipo                Saída
+================================ =================== ===========================
+`datetime.date(2018, 7, 6)`      `datetime.date`     `datetime.date(2018, 7, 6)`
+`datetime(2018, 7, 6, 21, 0, 0)` `datetime.datetime` `datetime.date(2018, 7, 6)`
+`"2018-07-06T21:00:00"`          `str`               `datetime.date(2018, 7, 6)`
+`"2018-07-06 21:00:00"`          `str`               `datetime.date(2018, 7, 6)`
+`"2018-07-06"`                   `str`               `datetime.date(2018, 7, 6)`
+`"06/07/2018"`                   `str`               `datetime.date(2018, 7, 6)`
+`"2018-07"`                      `str`               `datetime.date(2018, 7, 1)`
+`"Jul/2018"`                     `str`               `datetime.date(2018, 7, 1)`
+`"Jul-2018"`                     `str`               `datetime.date(2018, 7, 1)`
+`"Jul 2018"`                     `str`               `datetime.date(2018, 7, 1)`
+`"07/2018"``                     `str`               `datetime.date(2018, 7, 1)`
+`"2018"`                         `str`               `datetime.date(2018, 1, 1)`
+`1530925200`                     `int` (timestamp)   `datetime.date(2018, 7, 6)`
+`1530925200.0`                   `float` (timestamp) `datetime.date(2018, 7, 6)`
+================================ =================== ===========================
 
 .. _Exportando os dados:
 

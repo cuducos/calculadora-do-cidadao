@@ -1,5 +1,8 @@
 # Changelog
 
+**0.5.0** (Ago 12, 2020)
+  * Adds more flexibility to date inputs (parses strings and other usual formats)
+
 **0.4.2** (Jun 15, 2020)
   * Fixes URL for FED's Consumer Price Index for All Urban Consumers: All Items
 

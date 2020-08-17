@@ -2,6 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 
 import pytest
+from freezegun import freeze_time
 
 from calculadora_do_cidadao.fields import DateField, PercentField
 
@@ -11,6 +12,7 @@ def test_percent_field(value):
     assert PercentField.deserialize(value) == Decimal("0.1237")
 
 
+@freeze_time("2018-07-06 21:00:00", tz_offset=-3)
 @pytest.mark.parametrize(
     "value",
     (

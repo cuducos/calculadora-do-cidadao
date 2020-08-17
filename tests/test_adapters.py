@@ -2,6 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 
 from pytest import approx, mark, raises
+from freezegun import freeze_time
 
 from calculadora_do_cidadao import (
     AllUrbanCityAverage,
@@ -110,6 +111,7 @@ def test_adapter_range(adapter, length, start_date, end_date, mocker):
         instance.adjust(future_date)
 
 
+@freeze_time("2018-07-06 21:00:00", tz_offset=-3)
 @mark.parametrize(
     "adapter,original,value,target",
     (

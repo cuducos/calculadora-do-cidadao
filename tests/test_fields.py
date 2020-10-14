@@ -31,7 +31,7 @@ def test_date_field_with_complete_dates(value):
 
 
 @pytest.mark.parametrize(
-    "value", ("2018-07", "Jul/2018", "Jul-2018", "Jul 2018", "07/2018",),
+    "value", ("2018-07", "Jul/2018", "Jul-2018", "Jul 2018", "07/2018")
 )
 def test_date_field_with_incomplete_dates(value):
     assert DateField.deserialize(value) == date(2018, 7, 1)

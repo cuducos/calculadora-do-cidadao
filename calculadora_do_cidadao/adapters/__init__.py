@@ -82,6 +82,11 @@ class Adapter(metaclass=ABCMeta):
         return getattr(self, "COOKIES", {})
 
     @property
+    def post_data(self) -> Optional[dict]:
+        """Wrapper to get POST_DATA if set, avoiding error if not set."""
+        return getattr(self, "POST_DATA", None)
+
+    @property
     def should_unzip(self) -> bool:
         """Wrapper to get SHOULD_UNZIP if set, avoiding error if not set."""
         return getattr(self, "SHOULD_UNZIP", False)
@@ -173,7 +178,7 @@ class Adapter(metaclass=ABCMeta):
     def download(self) -> IndexesGenerator:
         """Wrapper to use the `Download` class and pipe the result to `rows`
         imported method, yielding a series of rows parsed by `rows`."""
-        download = Download(self.url, self.should_unzip, self.cookies)
+        download = Download(self.url, self.should_unzip, self.cookies, self.post_data)
         with download() as path:
             for kwargs in self.import_kwargs:
                 for data in self.read_from(path, **kwargs):

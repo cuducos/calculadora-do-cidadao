@@ -22,7 +22,7 @@ def test_ftp(mocker):
     )
 
 
-def test_http(mocker):
+def test_http_get(mocker):
     session = mocker.patch("calculadora_do_cidadao.download.Session")
     session.return_value.get.return_value.content = b"42"
     jar = mocker.patch("calculadora_do_cidadao.download.cookiejar_from_dict")
@@ -37,6 +37,21 @@ def test_http(mocker):
 
     session.assert_called_once_with()
     session.return_value.get.assert_called_once_with("https://here.comes/a/fancy.url")
+    path.write_bytes.assert_called_once_with(b"42")
+
+
+def test_http_post(mocker):
+    session = mocker.patch("calculadora_do_cidadao.download.Session")
+    session.return_value.post.return_value.content = b"42"
+    path = mocker.MagicMock()
+
+    download = Download("https://here.comes/a/fancy.url", post_data={"test": 42})
+    download.http(path)
+
+    session.assert_called_once_with()
+    session.return_value.post.assert_called_once_with(
+        "https://here.comes/a/fancy.url", data={"test": 42}
+    )
     path.write_bytes.assert_called_once_with(b"42")
 
 

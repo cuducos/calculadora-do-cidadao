@@ -23,11 +23,13 @@ class Download:
     """Abstraction for the download of data from the source. It can be
     initialized informing that the resulting file is a Zip archive that should
     be unarchived. Cookies are just relevant if the URL uses HTTP (and, surely
-    cookies are optional)."""
+    cookies are optional). The `post_data` dictionary is used to send an HTTP
+    POST request (instead of the default GET)."""
 
     url: str
     should_unzip: bool = False
     cookies: Optional[dict] = None
+    post_data: Optional[dict] = None
 
     def __post_init__(self) -> None:
         """The initialization of this class defines the proper method to be
@@ -55,9 +57,15 @@ class Download:
         """Download the source file using HTTP (and cookies, if set at the
         initialization of the class)."""
         session = Session()
+
         if self.cookies:
             session.cookies = cookiejar_from_dict(self.cookies)
-        response = session.get(self.url)
+
+        if self.post_data:
+            response = session.post(self.url, data=self.post_data)
+        else:
+            response = session.get(self.url)
+
         path.write_bytes(response.content)
         return path
 

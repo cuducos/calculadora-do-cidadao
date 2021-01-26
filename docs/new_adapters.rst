@@ -47,3 +47,8 @@ Argumentos nomeados que serem passados passados para a função de leitura dos d
 Essa variável pode ser um dicionário e, nesse caso, a função de leitura será chamada apenas uma vez, desempacotando o dicionário como argumentos nomeados.
 
 Ainda, essa variável pode ser uma sequência de dicionários e, nesse caso, a função de leitura será chamada várias vezes, uma vez para cada dicionário da sequência.
+
+`POST_DATA`
+~~~~~~~~~~~
+
+Dicionário com valores que serão passados via HTTP POST para a URL especificada nesse adaptdor. A requisição HTTP será do tipo GET caso essa variável não seja criada.

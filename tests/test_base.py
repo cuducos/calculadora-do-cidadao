@@ -25,6 +25,10 @@ class GoodAdapter(Adapter):
         yield row
 
 
+class PostAdapter(GoodAdapter):
+    POST_DATA = {"test": 42}
+
+
 def test_file_types():
     msg = r"Invalid file type dummy\. Valid file types are: html, xls\."
     with pytest.raises(AdapterNoImportMethod, match=msg):
@@ -93,3 +97,21 @@ def test_from_csv():
 
     adapter2 = GoodAdapter(all_data)
     assert adapter2.data == {date(1998, 7, 12): Decimal("3.0")}
+
+
+def test_download_does_not_receive_post_data(mocker):
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
+    import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
+    import_from_html.return_value = tuple()
+    GoodAdapter()
+    download.assert_called_once_with("https://here.comes/a/fancy.url", False, {}, None)
+
+
+def test_download_receives_post_data(mocker):
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
+    import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
+    import_from_html.return_value = tuple()
+    PostAdapter()
+    download.assert_called_once_with(
+        "https://here.comes/a/fancy.url", False, {}, {"test": 42}
+    )

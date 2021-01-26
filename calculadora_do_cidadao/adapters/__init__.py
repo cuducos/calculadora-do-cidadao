@@ -178,7 +178,15 @@ class Adapter(metaclass=ABCMeta):
     def download(self) -> IndexesGenerator:
         """Wrapper to use the `Download` class and pipe the result to `rows`
         imported method, yielding a series of rows parsed by `rows`."""
-        download = Download(self.url, self.should_unzip, self.cookies, self.post_data)
+        post_processing = getattr(self, "post_processing", None)
+        download = Download(
+            url=self.url,
+            should_unzip=self.should_unzip,
+            cookies=self.cookies,
+            post_data=self.post_data,
+            post_processing=post_processing,
+        )
+
         with download() as path:
             for kwargs in self.import_kwargs:
                 for data in self.read_from(path, **kwargs):

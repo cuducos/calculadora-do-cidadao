@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from ftplib import FTP
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Iterator, Optional
+from typing import Callable, Iterator, Optional
 from urllib.parse import ParseResult, urlparse
 from zipfile import ZipFile
 
@@ -20,16 +20,26 @@ class DownloadMethodNotImplementedError(Exception):
 
 @dataclass
 class Download:
-    """Abstraction for the download of data from the source. It can be
-    initialized informing that the resulting file is a Zip archive that should
-    be unarchived. Cookies are just relevant if the URL uses HTTP (and, surely
-    cookies are optional). The `post_data` dictionary is used to send an HTTP
-    POST request (instead of the default GET)."""
+    """Abstraction for the download of data from the source.
+
+    It can be initialized informing that the resulting file is a Zip archive
+    that should be unarchived.
+
+    Cookies are just relevant if the URL uses HTTP (and, surely cookies are
+    optional).
+
+    The `post_data` dictionary is used to send an HTTP POST request (instead of
+    the default GET).
+
+    The `post_processing` as a bytes to bytes function that is able to edit the
+    contents before saving it locally, allowing adapter to fix malformed
+    documents."""
 
     url: str
     should_unzip: bool = False
     cookies: Optional[dict] = None
     post_data: Optional[dict] = None
+    post_processing: Optional[Callable[[bytes], bytes]] = None
 
     def __post_init__(self) -> None:
         """The initialization of this class defines the proper method to be
@@ -51,11 +61,11 @@ class Download:
             first_file, *_ = archive.namelist()
             target = path.parent / first_file
             target.write_bytes(archive.read(first_file))
+
         return target
 
     def http(self, path: Path) -> Path:
-        """Download the source file using HTTP (and cookies, if set at the
-        initialization of the class)."""
+        """Download the source file using HTTP."""
         session = Session()
 
         if self.cookies:
@@ -84,4 +94,10 @@ class Download:
         downloaded file or the file unarchived from the downloaded one)."""
         with TemporaryDirectory() as tmp:
             path = self.download_to(Path(tmp) / self.file_name)
-            yield self.unzip(path) if self.should_unzip else path
+            if self.should_unzip:
+                path = self.unzip(path)
+
+            if self.post_processing:
+                path.write_bytes(self.post_processing(path.read_bytes()))
+
+            yield path

@@ -29,6 +29,12 @@ class PostAdapter(GoodAdapter):
     POST_DATA = {"test": 42}
 
 
+class ProcessingAdapter(GoodAdapter):
+    @staticmethod
+    def post_processing(body: bytes) -> bytes:
+        return b"<table>" + body
+
+
 def test_file_types():
     msg = r"Invalid file type dummy\. Valid file types are: html, xls\."
     with pytest.raises(AdapterNoImportMethod, match=msg):
@@ -104,7 +110,13 @@ def test_download_does_not_receive_post_data(mocker):
     import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
     import_from_html.return_value = tuple()
     GoodAdapter()
-    download.assert_called_once_with("https://here.comes/a/fancy.url", False, {}, None)
+    download.assert_called_once_with(
+        url="https://here.comes/a/fancy.url",
+        should_unzip=False,
+        cookies={},
+        post_data=None,
+        post_processing=None,
+    )
 
 
 def test_download_receives_post_data(mocker):
@@ -113,5 +125,23 @@ def test_download_receives_post_data(mocker):
     import_from_html.return_value = tuple()
     PostAdapter()
     download.assert_called_once_with(
-        "https://here.comes/a/fancy.url", False, {}, {"test": 42}
+        url="https://here.comes/a/fancy.url",
+        should_unzip=False,
+        cookies={},
+        post_data={"test": 42},
+        post_processing=None,
+    )
+
+
+def test_post_processing(mocker):
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
+    import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
+    import_from_html.return_value = tuple()
+    adapter = ProcessingAdapter()
+    download.assert_called_once_with(
+        url="https://here.comes/a/fancy.url",
+        should_unzip=False,
+        cookies={},
+        post_data=None,
+        post_processing=adapter.post_processing,
     )

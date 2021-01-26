@@ -21,6 +21,14 @@ Variável    Descrição
 `file_type` `"html"` ou `"xls"`, indicando o formato dos dados na fonte.
 =========== ============================================================
 
+Métodos opcionais
+-----------------
+
+`post_processing`
+~~~~~~~~~~~~~~~~~
+
+Um método estático (``staticmethod``) ou função que recebe `bytes` como seu único argumento e também retorna `bytes`. Utilizado quando o documento a ser baixado está corrimpido na fonte, por exemplo. Essa função é executada antes de salvar o arquivo, dando a chance de corrigi-lo caso necessário.
+
 Variáveis opcionais
 -------------------
 
@@ -52,3 +60,4 @@ Ainda, essa variável pode ser uma sequência de dicionários e, nesse caso, a f
 ~~~~~~~~~~~
 
 Dicionário com valores que serão passados via HTTP POST para a URL especificada nesse adaptdor. A requisição HTTP será do tipo GET caso essa variável não seja criada.
+

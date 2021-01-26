@@ -30,16 +30,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --upgrade coverage setuptools tox
+          python -m pip install --upgrade poetry
+          poetry install
 
       - name: Run tests
-        run: tox -e py
+        run: poetry run pytest
 
       - name: Send test report to Code Climate
         if: matrix.python == 3.8 && success()
         env:
           CC_TEST_REPORTER_ID: 70e68b22b9022f5fe5b0a296ef6760a372c2ae7e9167a3d0847ee0145634e6dc
         run: |
-          coverage xml
+          poetry run coverage xml
           export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
           ./cc-test-reporter after-build

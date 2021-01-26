@@ -25,6 +25,40 @@ Adaptadores disponíveis
 ============================================================================================================================================ ==================================================
 Índice                                                                                                                                       Módulo
 ============================================================================================================================================ ==================================================
+`DIEESE Cesta Básica: média de todas as cidades disponíveis <https://www.dieese.org.br/cesta/>`_                                             :class:`calculadora_do_cidadao.CestaBasica`
+`DIEESE Cesta Básica: média das capitais da Região Centro-Oeste <https://www.dieese.org.br/cesta/>`_                                         :class:`calculadora_do_cidadao.CestaBasicaCentroOeste`
+`DIEESE Cesta Básica: média das capitais da Região Nordeste <https://www.dieese.org.br/cesta/>`_                                             :class:`calculadora_do_cidadao.CestaBasicaNordeste`
+`DIEESE Cesta Básica: média das capitais da Região Norte <https://www.dieese.org.br/cesta/>`_                                                :class:`calculadora_do_cidadao.CestaBasicaNorte`
+`DIEESE Cesta Básica: média das capitais da Região Sudeste <https://www.dieese.org.br/cesta/>`_                                              :class:`calculadora_do_cidadao.CestaBasicaSudeste`
+`DIEESE Cesta Básica: média das capitais da Região Sul <https://www.dieese.org.br/cesta/>`_                                                  :class:`calculadora_do_cidadao.CestaBasicaSul`
+`DIEESE Cesta Básica: Aracaju <https://www.dieese.org.br/cesta/>`_                                                                           :class:`calculadora_do_cidadao.CestaBasicaAracaju`
+`DIEESE Cesta Básica: Belém  <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaBelem`
+`DIEESE Cesta Básica: Belo Horizonte <https://www.dieese.org.br/cesta/>`_                                                                    :class:`calculadora_do_cidadao.CestaBasicaBeloHorizonte`
+`DIEESE Cesta Básica: Boa Vista <https://www.dieese.org.br/cesta/>`_                                                                         :class:`calculadora_do_cidadao.CestaBasicaBoaVista`
+`DIEESE Cesta Básica: Brasília <https://www.dieese.org.br/cesta/>`_                                                                          :class:`calculadora_do_cidadao.CestaBasicaBrasilia`
+`DIEESE Cesta Básica: Campo Grande <https://www.dieese.org.br/cesta/>`_                                                                      :class:`calculadora_do_cidadao.CestaBasicaCampoGrande`
+`DIEESE Cesta Básica: Cuiaba <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaCuiaba`
+`DIEESE Cesta Básica: Curitiba <https://www.dieese.org.br/cesta/>`_                                                                          :class:`calculadora_do_cidadao.CestaBasicaCuritiba`
+`DIEESE Cesta Básica: Florianópolis <https://www.dieese.org.br/cesta/>`_                                                                     :class:`calculadora_do_cidadao.CestaBasicaFlorianopolis`
+`DIEESE Cesta Básica: Fortaleza <https://www.dieese.org.br/cesta/>`_                                                                         :class:`calculadora_do_cidadao.CestaBasicaFortaleza`
+`DIEESE Cesta Básica: Goiânia <https://www.dieese.org.br/cesta/>`_                                                                           :class:`calculadora_do_cidadao.CestaBasicaGoiania`
+`DIEESE Cesta Básica: João Pessoa <https://www.dieese.org.br/cesta/>`_                                                                       :class:`calculadora_do_cidadao.CestaBasicaJoaoPessoa`
+`DIEESE Cesta Básica: Macaé <https://www.dieese.org.br/cesta/>`_                                                                             :class:`calculadora_do_cidadao.CestaBasicaMacae`
+`DIEESE Cesta Básica: Macapá <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaMacapa`
+`DIEESE Cesta Básica: Maceió <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaMaceio`
+`DIEESE Cesta Básica: Manaus <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaManaus`
+`DIEESE Cesta Básica: Natal <https://www.dieese.org.br/cesta/>`_                                                                             :class:`calculadora_do_cidadao.CestaBasicaNatal`
+`DIEESE Cesta Básica: Palmas <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaPalmas`
+`DIEESE Cesta Básica: Porto Alegre <https://www.dieese.org.br/cesta/>`_                                                                      :class:`calculadora_do_cidadao.CestaBasicaPortoAlegre`
+`DIEESE Cesta Básica: Porto Velho <https://www.dieese.org.br/cesta/>`_                                                                       :class:`calculadora_do_cidadao.CestaBasicaPortoVelho`
+`DIEESE Cesta Básica: Recife <https://www.dieese.org.br/cesta/>`_                                                                            :class:`calculadora_do_cidadao.CestaBasicaRecife`
+`DIEESE Cesta Básica: Rio Branco <https://www.dieese.org.br/cesta/>`_                                                                        :class:`calculadora_do_cidadao.CestaBasicaRioBranco`
+`DIEESE Cesta Básica: Rio de Janeiro <https://www.dieese.org.br/cesta/>`_                                                                    :class:`calculadora_do_cidadao.CestaBasicaRioDeJaneiro`
+`DIEESE Cesta Básica: Salvador <https://www.dieese.org.br/cesta/>`_                                                                          :class:`calculadora_do_cidadao.CestaBasicaSalvador`
+`DIEESE Cesta Básica: São Luís <https://www.dieese.org.br/cesta/>`_                                                                          :class:`calculadora_do_cidadao.CestaBasicaSaoLuis`
+`DIEESE Cesta Básica: São Paulo <https://www.dieese.org.br/cesta/>`_                                                                         :class:`calculadora_do_cidadao.CestaBasicaSaoPaulo`
+`DIEESE Cesta Básica: Teresina <https://www.dieese.org.br/cesta/>`_                                                                          :class:`calculadora_do_cidadao.CestaBasicaTeresina`
+`DIEESE Cesta Básica: Vitória <https://www.dieese.org.br/cesta/>`_                                                                           :class:`calculadora_do_cidadao.CestaBasicaVitoria`
 `FED's Consumer Price Index for All Urban Consumers: All Items <https://fred.stlouisfed.org/series/CPIAUCSL>`_                               :class:`calculadora_do_cidadao.AllUrbanCityAverage`
 `IGP-M <https://portalibre.fgv.br/estudos-e-pesquisas/indices-de-precos/igp/>`_                                                              :class:`calculadora_do_cidadao.Igpm`
 `INPC <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9258-indice-nacional-de-precos-ao-consumidor.html>`_                  :class:`calculadora_do_cidadao.Inpc`

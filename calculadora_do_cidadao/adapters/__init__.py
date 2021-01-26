@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from datetime import date
 from decimal import Decimal
+from itertools import chain
 from pathlib import Path
 from typing import Iterable, NamedTuple, Optional, Union
 
@@ -122,6 +123,15 @@ class Adapter(metaclass=ABCMeta):
         """Helper to generate an error message usually used together with
         `AdapterDateNotAvailableError`."""
         first, last = min(self.data.keys()), max(self.data.keys())
+        if first < wanted < last:
+            msg = (
+                f"This adapter has data from {first.month:0>2d}/{first.year} "
+                f"to {last.month:0>2d}/{last.year}, but not for "
+                f"{wanted.month:0>2d}/{wanted.year}. Available dates are:"
+            )
+            available = (f"    - {d.month:0>2d}/{d.year}" for d in self.data)
+            return "\n".join(chain((msg,), available))
+
         return (
             f"This adapter has data from {first.month:0>2d}/{first.year} "
             f"to {last.month:0>2d}/{last.year}. "

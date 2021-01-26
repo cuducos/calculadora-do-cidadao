@@ -32,18 +32,24 @@ Out[5]: Decimal('5.279855889296777979447848574')
 
 ## Mini-guia de contribuição
 
-### Testes
-
-A suíte de testes roda com diversas versões do Python via [`tox`](https://pypi.org/project/tox/). Se você não tiver instalado, `pip install tox` deve resolver.
+O pacote utiliza o padrão `pyproject.toml` e o [Poetry](https://python-poetry.org/). Para instalar as dependências:
 
 ```console
-$ tox
+$ poetry install --extras "docs"
 ```
 
-Se quiser rodar os testes mais rapidamente apenas para a versão em uso, é possível utilizar o [`pytest`](https://docs.pytest.org/), mas é necessário instalar alguns pacotes extras:
+### Testes
+
+Para rodar os testes apenas com a versão atual do Python:
 
 ```console
-$ pip install -r requirements-development.txt
+$ poetry run pytest
+```
+
+Para rodar com todas as versões de Python:
+
+```console
+$ poetry run tox
 ```
 
 #### Escrevendo testes de novos adaptadores
@@ -56,12 +62,10 @@ Quando criar m novo adaptador, escreva ao menos três casos de teste para o mét
 
 ### Documentação
 
-Para visualizar alterações na documentação, é preciso instalar alguns pacotes e utilizar a o [Sphinx](https://www.sphinx-doc.org/en/):
+Para a documentação, é preciso utilizar o [Sphinx](https://www.sphinx-doc.org/en/):
 
 ```console
-$ pip install -e .
-$ pip install -r docs/requirements.txt
-$ sphinx-build docs docs/_build
+$ poetry run sphinx-build docs docs/_build
 ```
 
 Depois, é só acessar `docs/_build/index.html`.

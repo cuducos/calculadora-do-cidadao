@@ -1,8 +1,20 @@
 from pathlib import Path
-from tempfile import TemporaryDirectory
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 from zipfile import ZipFile
 
 from pytest import fixture
+
+from tests import get_fixture
+
+
+@fixture
+def broken_table():
+    """This fixtures provide a copy of the broken table file because post
+    processing it (to fix the borken table) overwrites the orignal file."""
+    with NamedTemporaryFile() as _tmp:
+        tmp = Path(_tmp.name)
+        tmp.write_bytes(get_fixture("broken-table").read_bytes())
+        yield tmp
 
 
 @fixture(scope="session")

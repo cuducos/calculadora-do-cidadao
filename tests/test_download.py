@@ -1,5 +1,4 @@
 from pytest import raises
-from requests import Session
 
 from calculadora_do_cidadao.download import Download, DownloadMethodNotImplementedError
 
@@ -67,3 +66,14 @@ def test_download_not_implemented():
     expected = r"No method implemented for tcp\."  # this is a regex
     with raises(DownloadMethodNotImplementedError, match=expected):
         Download("tcp://here.comes/a/fancy/url.zip")
+
+
+def test_post_procesing(mocker, broken_table):
+    mocker.patch.object(Download, "http", return_value=broken_table)
+    download = Download(
+        "http://here.comes/a/fancy/url.zip", post_processing=lambda b: b"<table>" + b
+    )
+    with download() as path:
+        download.http.assert_called_once()
+        assert path.read_text().startswith("<table>")
+        assert path.read_text().endswith("</table>\n")

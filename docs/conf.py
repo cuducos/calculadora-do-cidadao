@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path().absolute().parent.parent))
 # -- Project information -----------------------------------------------------
 
 project = "Calculadora do Cidadão"
-copyright = "2020, Eduardo Cuducos"
+copyright = "2021, Eduardo Cuducos"
 author = "Eduardo Cuducos"
 
 # The full version, including alpha/beta/rc tags

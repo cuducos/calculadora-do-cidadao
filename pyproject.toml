@@ -14,6 +14,7 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Topic :: Utilities",
 ]
 keywords = [
@@ -65,12 +66,13 @@ legacy_tox_ini = """
 [tox]
 isolated_build = True
 envlist =
-    py{3.7,3.8}
+    py{3.7,3.8,3.9}
 
 [gh-actions]
 python =
     3.7: py3.7
     3.8: py3.8
+    3.9: py3.9
 
 [testenv]
 commands =

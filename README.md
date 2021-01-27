@@ -7,7 +7,7 @@
 [![PyPI](https://img.shields.io/pypi/v/calculadora-do-cidadao)](https://pypi.org/project/calculadora-do-cidadao/)
 [![](https://img.shields.io/readthedocs/calculadora-do-cidadao)](https://calculadora-do-cidadao.readthedocs.io/)
 
-Pacote em Python para correção de valores. Confira a [documentação](https://calculadora-do-cidadao.readthedocs.io/) para mais detalhes!
+Pacote em Python para correção de valores. Confira a [documentação](https://calculadora-do-cidadao.readthedocs.io/) e o [mini-guia de contribuição](CONTRIBUTING.md) para mais detalhes!
 
 ## Exemplo de uso
 
@@ -29,47 +29,3 @@ Out[5]: Decimal('5.279855889296777979447848574')
 ```
 
 [![asciicast](https://asciinema.org/a/295920.svg)](https://asciinema.org/a/295920)
-
-## Mini-guia de contribuição
-
-O pacote utiliza o padrão `pyproject.toml` e o [Poetry](https://python-poetry.org/). Para instalar as dependências:
-
-```console
-$ poetry install --extras "docs"
-```
-
-### Testes
-
-Para rodar os testes apenas com a versão atual do Python:
-
-```console
-$ poetry run pytest
-```
-
-Para rodar com todas as versões de Python:
-
-```console
-$ poetry run tox
-```
-
-#### Escrevendo testes de novos adaptadores
-
-Quando criar m novo adaptador, escreva ao menos três casos de teste para o método `adjust`:
-
-1. Utilizando apenas um argumento (data original)
-1. Utilizando dois argumentos (data original mais valor personalizado)
-1. Utilizando três argumentos (data original, valor personalizado e data final)
-
-### Documentação
-
-Para a documentação, é preciso utilizar o [Sphinx](https://www.sphinx-doc.org/en/):
-
-```console
-$ poetry run sphinx-build docs docs/_build
-```
-
-Depois, é só acessar `docs/_build/index.html`.
-
-### Limpeza de arquivos gerados automaticamente
-
-Para limpar os arquivos gerados automaticamente, existe o atalho `make clean`.

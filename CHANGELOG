@@ -1,5 +1,11 @@
 # Changelog
 
+**0.5.1** (Jan 26, 2021)
+  * Adds for DIEESE's basic shopping basket (cesta básica) price index
+  * Adds support for Python 3.9
+  * Adds possibility of downloading files using HTTP POST
+  * Adds possibility of post processing the body of a downloaded file
+
 **0.5.0** (Ago 12, 2020)
   * Adds more flexibility to date inputs (parses strings and other usual formats)
 

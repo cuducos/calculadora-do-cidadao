@@ -1,5 +1,9 @@
 # Changelog
 
+**0.5.2** (Jan 27, 2021)
+  * Fixes installation issue (Rows was missing as a dependency)
+  * Documentation minor fixes
+
 **0.5.1** (Jan 26, 2021)
   * Adds for DIEESE's basic shopping basket (cesta básica) price index
   * Adds support for Python 3.9

@@ -75,8 +75,11 @@ python =
     3.9: py3.9
 
 [testenv]
+deps = poetry
 commands =
-    pytest
+    poetry export --dev --without-hashes --output /tmp/calculadora-do-cidadao.requirements.txt
+    pip install -r /tmp/calculadora-do-cidadao.requirements.txt
+    pytest --black --mypy --mypy-ignore-missing-imports --cov=calculadora_do_cidadao --cov-report term --disable-warnings
 """
 
 [build-system]

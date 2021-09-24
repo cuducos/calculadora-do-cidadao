@@ -47,22 +47,22 @@ class IbgeAdapter(Adapter):
 class Inpc(IbgeAdapter):
     """Adapter for IBGE's INPC series."""
 
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/INPC/Serie_Historica/inpc_SerieHist.zip"
+    url = "http://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/INPC/Serie_Historica/inpc_SerieHist.zip"
 
 
 class Ipca(IbgeAdapter):
     """Adapter for IBGE's IPCA series."""
 
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA/Serie_Historica/ipca_SerieHist.zip"
+    url = "http://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA/Serie_Historica/ipca_SerieHist.zip"
 
 
 class Ipca15(IbgeAdapter):
     """Adapter for IBGE's IPCA-15 series."""
 
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_15/Series_Historicas/ipca-15_SerieHist.zip"
+    url = "http://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_15/Series_Historicas/ipca-15_SerieHist.zip"
 
 
 class IpcaE(IbgeAdapter):
     """Adapter for IBGE's IPCA-E series."""
 
-    url = "ftp://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_E/Series_Historicas/ipca-e_SerieHist.zip"
+    url = "http://ftp.ibge.gov.br/Precos_Indices_de_Precos_ao_Consumidor/IPCA_E/Series_Historicas/ipca-e_SerieHist.zip"

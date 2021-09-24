@@ -7,20 +7,6 @@ def test_unzip(zip_file):
     assert Download.unzip(zip_file).read_bytes() == b"42"
 
 
-def test_ftp(mocker):
-    ftp = mocker.patch("calculadora_do_cidadao.download.FTP")
-    path = mocker.MagicMock()
-
-    download = Download("ftp://here.comes/a/fancy/url")
-    download.ftp(path)
-
-    ftp.assert_called_once_with("here.comes")
-    ftp.return_value.__enter__.return_value.login.assert_called_once_with()
-    ftp.return_value.__enter__.return_value.retrbinary.assert_called_once_with(
-        "RETR /a/fancy/url", path.open.return_value.__enter__.return_value.write
-    )
-
-
 def test_http_get(mocker):
     session = mocker.patch("calculadora_do_cidadao.download.Session")
     session.return_value.get.return_value.content = b"42"
@@ -55,10 +41,10 @@ def test_http_post(mocker):
 
 
 def test_download(zip_file, mocker):
-    mocker.patch.object(Download, "ftp", return_value=zip_file)
-    download = Download("ftp://here.comes/a/fancy/url.zip", should_unzip=True)
+    mocker.patch.object(Download, "http", return_value=zip_file)
+    download = Download("http://here.comes/a/fancy/url.zip", should_unzip=True)
     with download() as path:
-        download.ftp.assert_called_once()
+        download.http.assert_called_once()
         assert path.read_bytes() == b"42"
 
 

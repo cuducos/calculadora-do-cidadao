@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 from dataclasses import dataclass
-from ftplib import FTP
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Callable, Iterator, Optional
@@ -77,14 +76,6 @@ class Download:
             response = session.get(self.url)
 
         path.write_bytes(response.content)
-        return path
-
-    def ftp(self, path: Path) -> Path:
-        """Download the source file using FTP."""
-        with FTP(self.parsed_url.netloc) as conn:
-            conn.login()
-            with path.open("wb") as fobj:
-                conn.retrbinary(f"RETR {self.parsed_url.path}", fobj.write)
         return path
 
     @contextmanager

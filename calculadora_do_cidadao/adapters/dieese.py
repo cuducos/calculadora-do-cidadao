@@ -4,9 +4,8 @@ from itertools import chain
 from statistics import mean
 from typing import NamedTuple, Optional
 
-from rows.fields import TextField
-
 from calculadora_do_cidadao.adapters import Adapter
+from calculadora_do_cidadao.rows.fields import TextField
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 

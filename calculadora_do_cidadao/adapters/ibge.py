@@ -2,11 +2,10 @@ from datetime import date
 from decimal import Decimal
 from typing import NamedTuple
 
-from rows.fields import PercentField
-
 from calculadora_do_cidadao.adapters import Adapter
 from calculadora_do_cidadao.fields import DateField
 from calculadora_do_cidadao.months import MONTHS
+from calculadora_do_cidadao.rows.fields import PercentField
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 

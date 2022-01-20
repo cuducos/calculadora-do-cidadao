@@ -1,9 +1,8 @@
 from typing import NamedTuple
 from urllib.parse import urlencode
 
-from rows.fields import DecimalField
-
 from calculadora_do_cidadao.adapters import Adapter
+from calculadora_do_cidadao.rows.fields import DecimalField
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 

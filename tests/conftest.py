@@ -7,6 +7,12 @@ from pytest import fixture
 from tests import get_fixture
 
 
+def pytest_configure(config):
+    plugin = config.pluginmanager.getplugin("mypy")
+    plugin.mypy_argv.append("--exclude")
+    plugin.mypy_argv.append('"^calculadora_do_cidadao/rows/"')
+
+
 @fixture
 def broken_table():
     """This fixtures provide a copy of the broken table file because post

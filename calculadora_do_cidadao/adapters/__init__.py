@@ -5,12 +5,16 @@ from itertools import chain
 from pathlib import Path
 from typing import Iterable, NamedTuple, Optional, Union
 
-from rows import export_to_csv, import_from_csv, import_from_dicts, import_from_html
-from rows.fields import DecimalField
-from rows.plugins.xls import import_from_xls
-
 from calculadora_do_cidadao.download import Download
 from calculadora_do_cidadao.fields import DateField
+from calculadora_do_cidadao.rows.fields import DecimalField
+from calculadora_do_cidadao.rows.plugins.dicts import import_from_dicts
+from calculadora_do_cidadao.rows.plugins.plugin_csv import (
+    export_to_csv,
+    import_from_csv,
+)
+from calculadora_do_cidadao.rows.plugins.plugin_html import import_from_html
+from calculadora_do_cidadao.rows.plugins.xls import import_from_xls
 from calculadora_do_cidadao.typing import (
     Date,
     IndexDictionary,

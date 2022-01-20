@@ -2,8 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Union
 
-from rows import fields
-
+from calculadora_do_cidadao.rows import fields
 from calculadora_do_cidadao.typing import Date
 
 

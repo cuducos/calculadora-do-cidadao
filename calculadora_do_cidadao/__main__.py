@@ -2,11 +2,12 @@ from pathlib import Path
 from inspect import isclass
 from typing import Iterable, Type
 
-from rows import export_to_csv, import_from_dicts
 from typer import Typer, echo
 
 import calculadora_do_cidadao
 from calculadora_do_cidadao.adapters import Adapter
+from calculadora_do_cidadao.rows.plugins.plugin_csv import export_to_csv
+from calculadora_do_cidadao.rows.plugins.dicts import import_from_dicts
 
 
 DEFAULT_EXPORT_FILE = Path("calculadora-do-cidadao.csv")

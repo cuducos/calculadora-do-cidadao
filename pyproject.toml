@@ -51,6 +51,9 @@ pytest-cov = "^2.12.1"
 pytest-mock = "^3.6.1"
 pytest-mypy = "^0.8.1"
 tox = "^3.24.4"
+types-freezegun = "^1.1.6"
+types-requests = "^2.27.7"
+types-setuptools = "^57.4.7"
 
 [tool.pytest.ini_options]
 addopts = "--black --mypy --mypy-ignore-missing-imports --ignore calculadora_do_cidadao/rows/ --cov=calculadora_do_cidadao --cov-report term --disable-warnings"

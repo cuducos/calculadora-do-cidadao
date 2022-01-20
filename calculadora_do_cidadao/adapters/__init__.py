@@ -203,7 +203,7 @@ class Adapter(metaclass=ABCMeta):
 
         with download() as path:
             for kwargs in self.import_kwargs:
-                for data in self.read_from(path, **kwargs):
+                for data in self.read_from(path, **kwargs):  # type: ignore
                     yield from (row for row in self.serialize(data) if row)
 
     def export_index(self, key, include_name: bool = False) -> dict:

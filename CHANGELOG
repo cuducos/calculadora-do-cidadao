@@ -1,5 +1,8 @@
 # Changelog
 
+**0.5.3** (Jan 20, 2022)
+  * Fixes Rows installation issue
+
 **0.5.2** (Jan 27, 2021)
   * Fixes installation issue (Rows was missing as a dependency)
   * Documentation minor fixes

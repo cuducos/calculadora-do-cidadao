@@ -7,6 +7,12 @@ A `Calculadora do Cidadão <https://github.com/cuducos/calculadora-do-cidadao>`_
 
     $ pip install calculadora-do-cidadao
 
+Caso queira utilizar o módulo da  `Calculadora do Cidadão <https://github.com/cuducos/calculadora-do-cidadao>`_ para o `Pandas <https://pandas.pydata.org/>`_, instale com:
+
+::
+
+    $ pip install calculadora-do-cidadao[pandas]
+
 .. toctree::
    :maxdepth: 2
    :caption: Índice:

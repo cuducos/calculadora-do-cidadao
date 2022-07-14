@@ -3,7 +3,7 @@
 O pacote utiliza o padrão `pyproject.toml` e o [Poetry](https://python-poetry.org/). Para instalar as dependências:
 
 ```console
-$ poetry install --extras "docs"
+$ poetry install --extras "pandas docs"
 ```
 
 ## Testes

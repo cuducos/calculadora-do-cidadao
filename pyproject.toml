@@ -31,6 +31,7 @@ packages = [
 python = "^3.8"
 pip = { version = ">=20.0.0", optional = true }
 lxml = "^4.7.1"
+pandas = { version = ">=1.4.3", optional = true }
 readthedocs-sphinx-ext = { version = ">=2.1.3", optional = true }
 requests = ">=2.22.0"
 sphinx = { version = ">=3.4.3", optional = true }
@@ -69,6 +70,7 @@ exclude = ["^calculadora_do_cidadao/rows/"]
 
 [tool.poetry.extras]
 docs = ["pip", "readthedocs-sphinx-ext", "sphinx", "sphinx-rtd-theme"]
+pandas = ["pandas"]
 
 [tool.tox]
 legacy_tox_ini = """

@@ -299,7 +299,7 @@ class DecimalField(Field):
                 value = Decimal(parts[0])
                 if len(parts) == 2:
                     decimal_places = len(parts[1])
-                    value = value + (Decimal(parts[1]) / (10 ** decimal_places))
+                    value = value + (Decimal(parts[1]) / (10**decimal_places))
             except InvalidOperation:
                 value_error(value, cls)
             return value

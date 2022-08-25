@@ -15,6 +15,9 @@ class PandasWrapper:
 
     @classmethod
     def wrap(cls, adapter):
+        """This assures that the adapter downloads the data only when
+        `PandasWrapper` is instantiated (as it works for regular adapters)."""
+
         def wrapper():
             return cls(adapter)
 

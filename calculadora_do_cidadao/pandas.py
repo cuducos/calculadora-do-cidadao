@@ -1,7 +1,3 @@
-from decimal import Decimal
-
-from pandas import Series
-
 from calculadora_do_cidadao.adapters import ibge
 
 

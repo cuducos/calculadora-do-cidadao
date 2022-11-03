@@ -1,12 +1,16 @@
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
-from tempfile import TemporaryDirectory
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 import pytest
 
-from calculadora_do_cidadao.adapters import Adapter, AdapterNoImportMethod
-from tests import get_fixture
+from calculadora_do_cidadao.adapters import (
+    Adapter,
+    AdapterNoImportMethod,
+    import_from_json,
+)
+from tests import fixture_path
 
 
 class DummyAdapter(Adapter):
@@ -25,6 +29,10 @@ class GoodAdapter(Adapter):
         yield row
 
 
+class HeadersAdapter(GoodAdapter):
+    HEADERS = {"test": 42}
+
+
 class PostAdapter(GoodAdapter):
     POST_DATA = {"test": 42}
 
@@ -36,7 +44,7 @@ class ProcessingAdapter(GoodAdapter):
 
 
 def test_file_types():
-    msg = r"Invalid file type dummy\. Valid file types are: html, xls\."
+    msg = r"Invalid file type dummy\. Valid file types are: html, json, xls\."
     with pytest.raises(AdapterNoImportMethod, match=msg):
         DummyAdapter()
 
@@ -88,12 +96,12 @@ def test_to_csv(mocker):
     with TemporaryDirectory() as _tmp:
         tmp = Path(_tmp) / "file"
         adapter.to_csv(tmp)
-        assert tmp.read_text() == get_fixture(GoodAdapter).read_text()
+        assert tmp.read_text() == fixture_path(GoodAdapter).read_text()
 
 
 def test_from_csv():
-    exported = get_fixture(GoodAdapter)
-    all_data = get_fixture("calculadora-do-cidadao")
+    exported = fixture_path(GoodAdapter)
+    all_data = fixture_path("calculadora-do-cidadao")
 
     adapter1 = GoodAdapter(exported)
     assert adapter1.data == {
@@ -105,6 +113,27 @@ def test_from_csv():
     assert adapter2.data == {date(1998, 7, 12): Decimal("3.0")}
 
 
+@pytest.mark.parametrize(
+    "contents,json_path,expected",
+    (
+        ('[{"answer":42},{"answer":21}]', [], (42, 21)),
+        ("[]", [], tuple()),
+        (
+            '{"data":{"rows": [{"answer":42},{"answer":21}]}}',
+            ["data", "rows"],
+            (42, 21),
+        ),
+    ),
+)
+def test_import_from_json(contents, json_path, expected):
+    with NamedTemporaryFile() as tmp:
+        json = Path(tmp.name)
+        json.write_text(contents)
+        data = import_from_json(json, json_path=json_path)
+        for row, value in zip(data, expected):
+            assert row.answer == value
+
+
 def test_download_does_not_receive_post_data(mocker):
     download = mocker.patch("calculadora_do_cidadao.adapters.Download")
     import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
@@ -113,6 +142,7 @@ def test_download_does_not_receive_post_data(mocker):
     download.assert_called_once_with(
         url="https://here.comes/a/fancy.url",
         should_unzip=False,
+        headers=None,
         cookies={},
         post_data=None,
         post_processing=None,
@@ -127,8 +157,24 @@ def test_download_receives_post_data(mocker):
     download.assert_called_once_with(
         url="https://here.comes/a/fancy.url",
         should_unzip=False,
+        headers=None,
         cookies={},
         post_data={"test": 42},
+        post_processing=None,
+    )
+
+
+def test_download_receives_headers(mocker):
+    download = mocker.patch("calculadora_do_cidadao.adapters.Download")
+    import_from_html = mocker.patch("calculadora_do_cidadao.adapters.import_from_html")
+    import_from_html.return_value = tuple()
+    HeadersAdapter()
+    download.assert_called_once_with(
+        url="https://here.comes/a/fancy.url",
+        should_unzip=False,
+        headers={"test": 42},
+        cookies={},
+        post_data=None,
         post_processing=None,
     )
 
@@ -141,6 +187,7 @@ def test_post_processing(mocker):
     download.assert_called_once_with(
         url="https://here.comes/a/fancy.url",
         should_unzip=False,
+        headers=None,
         cookies={},
         post_data=None,
         post_processing=adapter.post_processing,

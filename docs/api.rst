@@ -4,6 +4,8 @@ API
 Adaptador Base
 --------------
 
+.. autofunction:: calculadora_do_cidadao.adapters.import_from_json
+
 .. autoclass:: calculadora_do_cidadao.adapters.Adapter
    :members:
 

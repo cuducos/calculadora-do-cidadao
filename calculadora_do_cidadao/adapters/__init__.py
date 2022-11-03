@@ -1,9 +1,11 @@
 from abc import ABCMeta, abstractmethod
+from collections import namedtuple
 from datetime import date
 from decimal import Decimal
 from itertools import chain
+from json import load
 from pathlib import Path
-from typing import Iterable, NamedTuple, Optional, Union
+from typing import Any, Iterable, List, NamedTuple, Optional, Union
 
 from calculadora_do_cidadao.download import Download
 from calculadora_do_cidadao.fields import DateField
@@ -21,6 +23,28 @@ from calculadora_do_cidadao.typing import (
     IndexesGenerator,
     MaybeIndexesGenerator,
 )
+
+
+def import_from_json(path: Path, json_path: List[str]) -> Iterable[NamedTuple]:
+    """Imports data form a JSON file `path` creating an iterable of named
+    tuples similar to the Rows's import functions.
+
+    `json_path` is a sequence of keys or array indexes to get to the array with
+    the desired data.
+    """
+
+    with path.open() as handler:
+        data = load(handler)
+
+    for key_or_index in json_path:
+        data = data[key_or_index]
+
+    if not data:
+        return
+
+    keys = tuple(str(key) for key in data[0].keys())
+    Row = namedtuple("Row", keys)  # type: ignore
+    yield from (Row(**row) for row in data)  # type: ignore
 
 
 class AdapterNoImportMethod(Exception):
@@ -43,7 +67,7 @@ class Adapter(metaclass=ABCMeta):
         """The initialization of the Adapter consists of four steps.
 
         First, it tries to infer the `rows` import method to use from the
-        `file_type` class variable (which can be `html` or `xls`).
+        `file_type` class variable (which can be `html`, `xls` or `json`).
 
         Then it detects whether data will come from a download or from an
         exported CSV file.
@@ -54,7 +78,11 @@ class Adapter(metaclass=ABCMeta):
         Finally, if the source data is disaggregated, it calls the `aggregate`
         method.
         """
-        functions = {"html": import_from_html, "xls": import_from_xls}
+        functions = {
+            "html": import_from_html,
+            "json": import_from_json,
+            "xls": import_from_xls,
+        }
         try:
             self.read_from = functions[self.file_type]
         except KeyError:
@@ -90,6 +118,11 @@ class Adapter(metaclass=ABCMeta):
     def post_data(self) -> Optional[dict]:
         """Wrapper to get POST_DATA if set, avoiding error if not set."""
         return getattr(self, "POST_DATA", None)
+
+    @property
+    def headers(self) -> Optional[dict]:
+        """Wrapper to get HEADERS if set, avoiding error if not set."""
+        return getattr(self, "HEADERS", None)
 
     @property
     def should_unzip(self) -> bool:
@@ -196,15 +229,17 @@ class Adapter(metaclass=ABCMeta):
         download = Download(
             url=self.url,
             should_unzip=self.should_unzip,
+            headers=self.headers,
             cookies=self.cookies,
             post_data=self.post_data,
             post_processing=post_processing,
         )
 
-        with download() as path:
-            for kwargs in self.import_kwargs:
-                for data in self.read_from(path, **kwargs):  # type: ignore
-                    yield from (row for row in self.serialize(data) if row)
+        with download() as paths:
+            for path in paths():
+                for kwargs in self.import_kwargs:
+                    for data in self.read_from(path, **kwargs):  # type: ignore
+                        yield from (row for row in self.serialize(data) if row)
 
     def export_index(self, key, include_name: bool = False) -> dict:
         """Export a given index as a dictionary to be used with

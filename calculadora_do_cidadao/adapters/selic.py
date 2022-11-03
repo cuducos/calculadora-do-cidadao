@@ -1,35 +1,51 @@
 from datetime import date
+from decimal import Decimal
 from typing import NamedTuple
+from urllib.parse import urlencode
 
 from calculadora_do_cidadao.adapters import Adapter
-from calculadora_do_cidadao.fields import DateField, PercentField
-from calculadora_do_cidadao.months import MONTHS
+from calculadora_do_cidadao.fields import DateField
 from calculadora_do_cidadao.typing import MaybeIndexesGenerator
 
 
-YEARS = tuple(range(1995, date.today().year + 1))
-FIELD_TYPES = {f"field_{year}": PercentField for year in YEARS}
+URL = "https://www3.bcb.gov.br/novoselic/rest/fatoresAcumulados/pub/search"
+URL_PARAMS = {
+    "parametrosOrdenacao": '[{"nome":"periodo","decrescente":false}]',
+    "page": 1,
+    "pageSize": 48,
+}
 
 
 class Selic(Adapter):
     """Adapter for Brazilian Central Bank SELIC series."""
 
-    url = "http://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic"
-    file_type = "html"
+    url = f"{URL}?{urlencode(URL_PARAMS)}"
+    file_type = "json"
 
-    SHOULD_AGGREGATE = True
-    IMPORT_KWARGS = tuple(
-        {"index": index, "force_types": FIELD_TYPES} for index in range(1, 4)
+    HEADERS = {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Encoding": "gzip, deflate, br",
+    }
+    POST_DATA = (
+        {
+            "campoPeriodo": "mensal",
+            "dataInicial": "",
+            "dataFinal": "",
+            "ano": year,
+            "exibirMeses": True,
+        }
+        for year in range(date.today().year, 1996, -1)
     )
+    IMPORT_KWARGS = {"json_path": ["registros"]}
+    SHOULD_AGGREGATE = True
 
     def serialize(self, row: NamedTuple) -> MaybeIndexesGenerator:
-        """As each row contains more than one index this method might yield
-        more than one `calculadora_do_cidadao.typing.Index`."""
-        for year in YEARS:
-            keys = (f"field_{year}", "mesano")
-            value, month = (getattr(row, key) for key in keys)
-            if value is None:
-                continue
+        reference = DateField.deserialize(row.periodo.replace(" ", ""))  # type: ignore
+        value = Decimal(row.fator)  # type: ignore
+        yield reference, value
 
-            reference = DateField.deserialize(f"{MONTHS[month]}/{year}")
-            yield reference, value
+    def aggregate(self):
+        accumulated = 1
+        for key in sorted(self.data.keys()):
+            self.data[key] = accumulated * self.data[key]
+            accumulated = self.data[key]

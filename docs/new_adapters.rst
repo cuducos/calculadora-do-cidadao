@@ -32,6 +32,11 @@ Um método estático (``staticmethod``) ou função que recebe `bytes` como seu 
 Variáveis opcionais
 -------------------
 
+`HEADERS`
+~~~~~~~~~
+
+No caso de a URL usar o protocolo HTTP, essa variável pode ser um dicionário que será incluído como _headers_ em cada requisição HTTP.
+
 `COOKIES`
 ~~~~~~~~~
 
@@ -61,3 +66,4 @@ Ainda, essa variável pode ser uma sequência de dicionários e, nesse caso, a f
 
 Dicionário com valores que serão passados via HTTP POST para a URL especificada nesse adaptdor. A requisição HTTP será do tipo GET caso essa variável não seja criada.
 
+Ainda, essa variável pode ser uma sequência de dicionários e, nesse caso, serão feitas várias requisições, uma com cada conunto de dados dessa sequência.

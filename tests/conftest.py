@@ -4,7 +4,7 @@ from zipfile import ZipFile
 
 from pytest import fixture
 
-from tests import get_fixture
+from tests import fixture_path
 
 
 def pytest_configure(config):
@@ -19,7 +19,7 @@ def broken_table():
     processing it (to fix the borken table) overwrites the orignal file."""
     with NamedTemporaryFile() as _tmp:
         tmp = Path(_tmp.name)
-        tmp.write_bytes(get_fixture("broken-table").read_bytes())
+        tmp.write_bytes(fixture_path("broken-table").read_bytes())
         yield tmp
 
 

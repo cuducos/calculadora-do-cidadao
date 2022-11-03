@@ -1,5 +1,8 @@
 # Changelog
 
+**0.5.4** (Nov 3, 2022)
+  * Fixes Selic adapter
+
 **0.5.3** (Jan 20, 2022)
   * Fixes Rows installation issue
 

@@ -1,5 +1,8 @@
 # Changelog
 
+**1.0.0** (Nov 30, 2022)
+  * Removes Selic adapter since there is a bug in the current implementation (once it is fixed we can bring it back)
+
 **0.5.4** (Nov 3, 2022)
   * Fixes Selic adapter
 

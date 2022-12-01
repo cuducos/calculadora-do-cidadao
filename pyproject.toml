@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "calculadora-do-cidadao"
-version = "0.5.4"
+version = "1.0.0"
 description = "Tool for Brazilian Reais monetary adjustment/correction"
 authors = ["Eduardo Cuducos <cuducos@users.noreply.github.com>"]
 license = "GPLv3"

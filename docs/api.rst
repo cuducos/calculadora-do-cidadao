@@ -156,12 +156,6 @@ Família IPCA & INPC
 .. autoclass:: calculadora_do_cidadao.IpcaE
    :members:
 
-SELIC
-~~~~~
-
-.. autoclass:: calculadora_do_cidadao.Selic
-   :members:
-
 Download
 --------
 

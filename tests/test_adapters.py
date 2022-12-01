@@ -45,7 +45,6 @@ from calculadora_do_cidadao import (
     Ipca,
     Ipca15,
     IpcaE,
-    Selic,
 )
 from calculadora_do_cidadao.adapters import AdapterDateNotAvailableError
 from tests import fixture_generator
@@ -397,15 +396,6 @@ def get_error_msg_for_future(start_date, end_date):
         (IpcaE, date(2017, 2, 13), None, None, "1.101569276203612423894969769"),
         (IpcaE, date(2012, 5, 8), 3, None, "4.577960384607494629737626417"),
         (IpcaE, date(1999, 11, 10), 5, date(2002, 9, 5), "6.0688157145076915108509866"),
-        (Selic, date(2018, 7, 6), None, None, "1.025932171267398295828904465"),
-        (Selic, date(2018, 7, 6), 21, None, "21.54457559661536421240699376"),
-        (
-            Selic,
-            date(2018, 7, 6),
-            12,
-            date(2018, 12, 1),
-            "12.31118605520877954994685358",
-        ),
     ),
 )
 def test_adapter_indexes(adapter, original, value, target, expected, mocker):
@@ -426,7 +416,6 @@ def test_adapter_indexes(adapter, original, value, target, expected, mocker):
         (Ipca, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (Ipca15, 312, date(1994, 1, 1), date(2019, 12, 1)),
         (IpcaE, 312, date(1994, 1, 1), date(2019, 12, 1)),
-        (Selic, 12, date(2018, 1, 1), date(2018, 12, 1)),
     ),
 )
 def test_adapter_out_of_range(adapter, length, start_date, end_date, mocker):

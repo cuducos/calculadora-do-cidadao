@@ -65,7 +65,6 @@ Adaptadores disponíveis
 `IPCA <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9256-indice-nacional-de-precos-ao-consumidor-amplo.html>`_            :class:`calculadora_do_cidadao.Ipca`
 `IPCA-15 <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9260-indice-nacional-de-precos-ao-consumidor-amplo-15.html>`_      :class:`calculadora_do_cidadao.Ipca15`
 `IPCA-E <https://www.ibge.gov.br/estatisticas/economicas/precos-e-custos/9262-indice-nacional-de-precos-ao-consumidor-amplo-especial.html>`_ :class:`calculadora_do_cidadao.IpcaE`
-`Selic <https://receita.economia.gov.br/orientacao/tributaria/pagamentos-e-parcelamentos/taxa-de-juros-selic>`_                              :class:`calculadora_do_cidadao.Selic`
 ============================================================================================================================================ ==================================================
 
 Uso de um adaptador

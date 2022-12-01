@@ -44,7 +44,6 @@ from calculadora_do_cidadao import (
     Ipca,
     Ipca15,
     IpcaE,
-    Selic,
 )
 from calculadora_do_cidadao.__main__ import data, export, get_adapters
 
@@ -90,7 +89,6 @@ ADAPTERS = (
     CestaBasicaTeresina,
     CestaBasicaVitoria,
     IpcaE,
-    Selic,
 )
 
 

@@ -9,6 +9,12 @@
 
 Pacote em Python para correção de valores. Confira a [documentação](https://calculadora-do-cidadao.readthedocs.io/) e o [mini-guia de contribuição](CONTRIBUTING.md) para mais detalhes!
 
+<div align=center>
+
+> :warning: **Estou buscando pessoas para manter esse projeto.** Não tenho tido tempo para cuidar dele como deveria, e sinto que tenho pouco conhecimento de economia e mercado financeiro para aprimorá-lo.
+
+</div>
+
 ## Exemplo de uso
 
 ```python
